@@ -1,0 +1,34 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+// Create Schema
+const applicantSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    // required: true,
+  },
+  date: {
+    type: Date,
+    // required: true,
+  },
+  ed: {
+    type: Array,
+    required: false,
+  },
+  skills: {
+    type: Array,
+    required: false,
+  },
+});
+
+const applicant = mongoose.model("applicant", applicantSchema);
+
+module.exports = applicant;
