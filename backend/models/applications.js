@@ -10,7 +10,7 @@ const appnSchema = new Schema({
     },
     applicant: {
         type: Schema.Types.ObjectId,
-        ref: "applicant",
+        ref: "user",
         required: true,
     },
     status: {

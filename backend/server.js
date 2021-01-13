@@ -5,8 +5,7 @@ const DB_NAME = "jobsdb";
 const PORT = 4000;
 
 const logger = require("./logger");
-const applicantRouter = require("./routes/applicant");
-const recruiterRouter = require("./routes/recruiter");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -16,8 +15,7 @@ app.use(express.json());
 app.use(logger);
 
 // adding routes
-app.use("/applicant", applicantRouter);
-app.use("/recruiter", recruiterRouter);
+app.use("/user", userRouter);
 
 // db connection
 mongoose.connect("mongodb://127.0.0.1:27017/" + DB_NAME, {

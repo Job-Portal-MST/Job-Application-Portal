@@ -9,7 +9,7 @@ const jobSchema = new Schema({
     },
     recruiterId: {
         type: Schema.Types.ObjectId,
-        ref: "recruiter",
+        ref: "user",
         required: true,
     },
     maxApplicant: {
