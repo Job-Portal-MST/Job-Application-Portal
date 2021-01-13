@@ -1,11 +1,11 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
 const applicant = require("../models/applicant");
 
 /**
- * @route  GET user
- * @desc get list of all application objects
+ * @route GET applicant
+ * @desc get list of all applicants
  * @access public
  */
 router.get("/", (req, res) => {
@@ -17,8 +17,8 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @route  POST user
- * @desc add a new user
+ * @route POST applicant
+ * @desc add a new applicant
  * @access public
  */
 router.post("/", (req, res) => {

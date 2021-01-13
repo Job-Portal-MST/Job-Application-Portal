@@ -10,6 +10,7 @@ const applicantSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -26,6 +27,10 @@ const applicantSchema = new Schema({
   skills: {
     type: Array,
     required: false,
+  },
+  applyCnt: {
+    type: Number,
+    default: 0,
   },
 });
 
