@@ -14,19 +14,15 @@ const applicantSchema = new Schema({
   },
   password: {
     type: String,
-    // required: true,
-  },
-  date: {
-    type: Date,
-    // required: true,
+    required: true,
   },
   ed: {
     type: Array,
-    required: false,
+    default: [],
   },
   skills: {
     type: Array,
-    required: false,
+    default: [],
   },
   applyCnt: {
     type: Number,

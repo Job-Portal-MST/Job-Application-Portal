@@ -7,7 +7,7 @@ const jobSchema = new Schema({
     type: String,
     required: true,
   },
-  recuiter: {
+  recruiterId: {
     type: Schema.Types.ObjectId,
     ref: "recruiter",
     required: true,

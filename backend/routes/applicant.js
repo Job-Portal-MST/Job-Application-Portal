@@ -1,3 +1,4 @@
+const httpCodes = require("http-status-codes");
 const express = require("express");
 const router = express.Router();
 
@@ -21,16 +22,22 @@ router.get("/", (req, res) => {
  * @desc add a new applicant
  * @access public
  */
-router.post("/", (req, res) => {
-  console.log(req.body);
-  applicant
-    .create({
-      name: req.body.name,
-      email: req.body.email,
+router.post("/new", (req, res) => {
+  const newAppl = new applicant({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  newAppl
+    .save()
+    .then((data) => {
+      console.log("new applicant=> " + data);
+      res.send("ok");
     })
-    .then(() => console.log("done"))
-    .catch((err) => console.log(err));
-  res.send("done");
+    .catch((err) => {
+      console.log(err);
+      res.status(httpCodes.StatusCodes.BAD_REQUEST).send(err);
+    });
 });
 
 module.exports = router;
