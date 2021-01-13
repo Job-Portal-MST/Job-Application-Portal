@@ -10,11 +10,11 @@ const applicant = require("../models/applicant");
  * @access public
  */
 router.get("/", (req, res) => {
-  applicant.find((err, data) => {
-    if (err) {
-      console.log(err);
-    } else res.json(data);
-  });
+    applicant.find((err, data) => {
+        if (err) {
+            console.log(err);
+        } else res.json(data);
+    });
 });
 
 /**
@@ -23,21 +23,21 @@ router.get("/", (req, res) => {
  * @access public
  */
 router.post("/new", (req, res) => {
-  const newAppl = new applicant({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  newAppl
-    .save()
-    .then((data) => {
-      console.log("new applicant=> " + data);
-      res.send("ok");
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(httpCodes.StatusCodes.BAD_REQUEST).send(err);
+    const newAppl = new applicant({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
     });
+    newAppl
+        .save()
+        .then((data) => {
+            console.log("new applicant=> " + data);
+            res.send("ok");
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(httpCodes.StatusCodes.BAD_REQUEST).send(err);
+        });
 });
 
 module.exports = router;
