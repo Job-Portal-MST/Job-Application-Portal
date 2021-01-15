@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ls from "local-storage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class NavBar extends Component {
-    constructor() {
-        super();
-    }
     onLogoutClick = (e) => {
         e.preventDefault();
         ls.set("logged-in", "false");
@@ -35,11 +32,7 @@ class NavBar extends Component {
         } else {
             items.push(
                 <li className="navbar-item">
-                    <Link
-                        to="/"
-                        className="nav-link"
-                        onClick={this.onLogoutClick}
-                    >
+                    <Link to="/" className="nav-link" onClick={this.onLogoutClick}>
                         Logout
                     </Link>
                 </li>
@@ -56,9 +49,7 @@ class NavBar extends Component {
                         HOME
                     </Link>
                     <div className="collapse navbar-collapse">
-                        <ul className="nav navbar-nav ml-auto">
-                            {navbarItems}
-                        </ul>
+                        <ul className="nav navbar-nav ml-auto">{navbarItems}</ul>
                     </div>
                 </nav>
             </div>

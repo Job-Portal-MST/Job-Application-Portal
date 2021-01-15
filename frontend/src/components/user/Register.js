@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ls from "local-storage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,18 +16,7 @@ class Register extends Component {
             bio: "",
             ////////////////
             // for applicant
-            ed: [
-                {
-                    insti: "iiit",
-                    startYear: 2010,
-                    endYear: 2222,
-                },
-                {
-                    insti: "iiith",
-                    startYear: 2010,
-                    endYear: 2222,
-                },
-            ],
+            ed: [],
             skills: [],
             applyCnt: 0,
         };
@@ -258,7 +246,7 @@ class Register extends Component {
                             </Fragment>
                         )}
                     </Fragment>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" className="btn btn-primary">
                         Submit
                     </button>
                 </form>
