@@ -45,7 +45,6 @@ class Login extends Component {
                             id="email"
                             type="text"
                             className="form-control"
-                            // value={this.state.name}
                             onChange={this.onChange}
                         />
                         <br />
@@ -54,7 +53,6 @@ class Login extends Component {
                             id="password"
                             type="password"
                             className="form-control"
-                            // value={this.state.name}
                             onChange={this.onChange}
                         />
                         <br />
