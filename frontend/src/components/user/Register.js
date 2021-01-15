@@ -40,6 +40,19 @@ class Register extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        const newUserData = this.state;
+        axios
+            .post("/user/register", newUserData)
+            .then((res) => {
+                ls.set("logged-in", "true");
+                ls.set("email", res.data.user.email);
+                ls.set("isRecruiter", res.data.user.isRecruiter);
+                window.location = "/";
+            })
+            .catch((res) => {
+                console.log(res);
+                alert("Error:" + res.data.error);
+            });
     };
 
     handleEdChange = (idx, key, val) => {

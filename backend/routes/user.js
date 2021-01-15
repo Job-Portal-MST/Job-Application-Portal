@@ -16,9 +16,7 @@ router.post("/login", (req, res) => {
     const { email, password } = req.body;
     User.findOne({ email }).then((user) => {
         if (!user) {
-            return res
-                .status(httpStatusCodes.BAD_REQUEST)
-                .json({ email: "id does not exists" });
+            return res.status(httpStatusCodes.BAD_REQUEST).json({ email: "id does not exists" });
         }
         bcrypt.compare(password, user.password).then((matched) => {
             if (matched) {
@@ -48,9 +46,7 @@ router.post("/register", (req, res) => {
     // TODO :: perform validation
     User.findOne({ email: req.body.email }).then((user) => {
         if (user) {
-            return res
-                .status(httpStatusCodes.BAD_REQUEST)
-                .json({ email: "id exists" });
+            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id exists" });
         } else {
             const newUser = new User({
                 name: req.body.name,
@@ -65,14 +61,14 @@ router.post("/register", (req, res) => {
                 newUser.ed = req.body.ed;
                 newUser.skills = req.body.skills;
             }
-            console.log(newUser);
+
             bcrypt.hash(newUser.password, 10, (err, hash) => {
                 if (err) throw err;
                 newUser.password = hash;
                 newUser
                     .save()
-                    .then((user) => res.json(user))
-                    .catch((err) => res.send(err));
+                    .then((user) => res.json({ user }))
+                    .catch((err) => res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).send(err));
             });
         }
     });

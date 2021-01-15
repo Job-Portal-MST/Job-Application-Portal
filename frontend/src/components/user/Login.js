@@ -30,7 +30,6 @@ class Login extends Component {
                 window.location = "/";
             })
             .catch((res) => {
-                console.log(res.data);
                 alert("Invalid credentials!");
             });
     };
