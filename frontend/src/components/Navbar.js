@@ -25,6 +25,13 @@ class NavBar extends Component {
                     </Link>
                 </li>
             );
+            items.push(
+                <li className="navbar-item">
+                    <Link to="/register" className="nav-link">
+                        Register
+                    </Link>
+                </li>
+            );
         } else {
             items.push(
                 <li className="navbar-item">
