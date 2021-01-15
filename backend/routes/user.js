@@ -22,7 +22,14 @@ router.post("/login", (req, res) => {
         }
         bcrypt.compare(password, user.password).then((matched) => {
             if (matched) {
-                res.send("ok");
+                console.log("ok");
+                res.json({
+                    ok: true,
+                    user: {
+                        email,
+                        isRecruiter: user.isRecruiter,
+                    },
+                });
             } else {
                 res.status(httpStatusCodes.UNAUTHORIZED).json({
                     error: "incorrect passowrd",
