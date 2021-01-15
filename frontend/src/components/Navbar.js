@@ -14,7 +14,34 @@ class NavBar extends Component {
         ls.set("isRecruiter", "");
         window.location = "/";
     };
+
+    createNavbarItems = () => {
+        let items = [];
+        if (ls.get("logged-in") !== "true") {
+            items.push(
+                <li className="navbar-item">
+                    <Link to="/login" className="nav-link">
+                        Login
+                    </Link>
+                </li>
+            );
+        } else {
+            items.push(
+                <li className="navbar-item">
+                    <Link
+                        to="/"
+                        className="nav-link"
+                        onClick={this.onLogoutClick}
+                    >
+                        Logout
+                    </Link>
+                </li>
+            );
+        }
+        return items;
+    };
     render() {
+        const navbarItems = this.createNavbarItems();
         return (
             <div>
                 <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -23,23 +50,7 @@ class NavBar extends Component {
                     </Link>
                     <div className="collapse navbar-collapse">
                         <ul className="nav navbar-nav ml-auto">
-                            {ls.get("logged-in") === "true" ? (
-                                <li className="navbar-item">
-                                    <Link
-                                        to="/"
-                                        className="nav-link"
-                                        onClick={this.onLogoutClick}
-                                    >
-                                        Logout
-                                    </Link>
-                                </li>
-                            ) : (
-                                <li className="navbar-item">
-                                    <Link to="/login" className="nav-link">
-                                        Login
-                                    </Link>
-                                </li>
-                            )}
+                            {navbarItems}
                         </ul>
                     </div>
                 </nav>
