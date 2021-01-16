@@ -67,8 +67,13 @@ router.post("/register", (req, res) => {
                 newUser.password = hash;
                 newUser
                     .save()
-                    .then((user) => res.json({ user }))
-                    .catch((err) => res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).send(err));
+                    .then((user) => {
+                        res.json({ user });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).send(err);
+                    });
             });
         }
     });
