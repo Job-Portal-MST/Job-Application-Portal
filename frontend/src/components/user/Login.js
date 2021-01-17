@@ -23,7 +23,7 @@ class Login extends Component {
         axios
             .post("/user/login", loginData)
             .then((res) => {
-                ls.set("logged-in", "true");
+                ls.set("logged-in", "yes");
                 ls.set("email", res.data.user.email);
                 ls.set("isRecruiter", res.data.user.isRecruiter);
                 window.location = "/";

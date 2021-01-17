@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 class NavBar extends Component {
     onLogoutClick = (e) => {
         e.preventDefault();
-        ls.set("logged-in", "false");
+        ls.set("logged-in", "no");
         ls.set("email", "");
         ls.set("isRecruiter", "");
         window.location = "/";
@@ -14,7 +14,7 @@ class NavBar extends Component {
 
     createNavbarItems = () => {
         let items = [];
-        if (ls.get("logged-in") !== "true") {
+        if (ls.get("logged-in") !== "yes") {
             items.push(
                 <li className="navbar-item">
                     <Link to="/login" className="nav-link">

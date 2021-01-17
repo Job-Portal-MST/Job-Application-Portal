@@ -13,7 +13,7 @@ class Register extends Component {
             name: "",
             email: "",
             password: "",
-            isRecruiter: false,
+            isRecruiter: "no",
             // for recruiter
             contact: "",
             bio: "",
@@ -39,7 +39,7 @@ class Register extends Component {
         axios
             .post("/user/register", newUserData)
             .then((res) => {
-                ls.set("logged-in", "true");
+                ls.set("logged-in", "yes");
                 ls.set("email", res.data.user.email);
                 ls.set("isRecruiter", res.data.user.isRecruiter);
                 window.location = "/";
@@ -80,17 +80,17 @@ class Register extends Component {
                         <label>User Type : </label>
                         <div className="dropdown">
                             <select id="isRecruiter" onChange={this.onChange}>
-                                <option className="dropdown-item" value="false">
+                                <option className="dropdown-item" value="no">
                                     Applicant
                                 </option>
-                                <option className="dropdown-item" value="true">
+                                <option className="dropdown-item" value="yes">
                                     Recruiter
                                 </option>
                             </select>
                         </div>
                     </div>
                     <Fragment>
-                        {this.state.isRecruiter === "true" ? (
+                        {this.state.isRecruiter === "yes" ? (
                             <ExtRecruiterProfile user={this.state} parOnChange={this.chOnChange} />
                         ) : (
                             <ExtApplicantProfile

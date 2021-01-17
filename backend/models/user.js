@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         require: true,
     },
     isRecruiter: {
-        type: Boolean,
+        type: String,
         required: true,
     },
     // for recruiter

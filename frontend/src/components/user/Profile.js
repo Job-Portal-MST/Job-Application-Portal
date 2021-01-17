@@ -88,7 +88,7 @@ class Profile extends Component {
                         parOnChange={(key, value) => this.setState({ [key]: value })}
                         user={this.state}
                     />
-                    {ls.get("isRecruiter") === "true" ? (
+                    {ls.get("isRecruiter") === "yes" ? (
                         <ExtRecruiterProfile
                             user={this.state}
                             parOnChange={(key, value) => this.setState({ [key]: value })}
