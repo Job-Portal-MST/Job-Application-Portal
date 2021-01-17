@@ -86,7 +86,7 @@ router.post("/register", (req, res) => {
  */
 router.get("/profile", (req, res) => {
     // TODO :: perform validation
-    const { email } = req.body;
+    const { email } = req.query;
     User.findOne({ email }).then((user) => {
         if (!user) {
             return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id does not exists" });

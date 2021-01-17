@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
+import Profile from "./components/user/Profile";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <br />
                 <Route path="/login" exact component={Login} />
                 <Route path="/register" exact component={Register} />
+                <Route path="/profile" exact component={Profile} />
             </div>
         </Router>
     );

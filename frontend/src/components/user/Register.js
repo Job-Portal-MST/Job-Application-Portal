@@ -39,7 +39,6 @@ class Register extends Component {
         axios
             .post("/user/register", newUserData)
             .then((res) => {
-                console.log("hi");
                 ls.set("logged-in", "true");
                 ls.set("email", res.data.user.email);
                 ls.set("isRecruiter", res.data.user.isRecruiter);

@@ -32,6 +32,13 @@ class NavBar extends Component {
         } else {
             items.push(
                 <li className="navbar-item">
+                    <Link to="/profile" className="nav-link">
+                        Profile
+                    </Link>
+                </li>
+            );
+            items.push(
+                <li className="navbar-item">
                     <Link to="/" className="nav-link" onClick={this.onLogoutClick}>
                         Logout
                     </Link>

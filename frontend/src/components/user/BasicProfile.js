@@ -20,26 +20,34 @@ class BasicProfile extends Component {
                         value={this.props.user.name}
                     />
                 </div>
-                <div className="form-group">
-                    <label>Email: </label>
-                    <input
-                        id="email"
-                        type="text"
-                        className="form-control"
-                        onChange={this.onChange}
-                        value={this.props.email}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password: </label>
-                    <input
-                        id="password"
-                        type="password"
-                        className="form-control"
-                        onChange={this.onChange}
-                        value={this.props.user.password}
-                    />
-                </div>
+                {this.props.hideEmail ? (
+                    <Fragment></Fragment>
+                ) : (
+                    <div className="form-group">
+                        <label>Email: </label>
+                        <input
+                            id="email"
+                            type="text"
+                            className="form-control"
+                            onChange={this.onChange}
+                            value={this.props.email}
+                        />
+                    </div>
+                )}
+                {this.props.hidePassword ? (
+                    <Fragment></Fragment>
+                ) : (
+                    <div className="form-group">
+                        <label>Password: </label>
+                        <input
+                            id="password"
+                            type="password"
+                            className="form-control"
+                            onChange={this.onChange}
+                            value={this.props.user.password}
+                        />
+                    </div>
+                )}
             </Fragment>
         );
     }
