@@ -30,6 +30,15 @@ class NavBar extends Component {
                 </li>
             );
         } else {
+            if (ls.get("isRecruiter") === "yes") {
+                items.push(
+                    <li className="navbar-item">
+                        <Link to="/createJob" className="nav-link">
+                            Create Job
+                        </Link>
+                    </li>
+                );
+            }
             items.push(
                 <li className="navbar-item">
                     <Link to="/profile" className="nav-link">

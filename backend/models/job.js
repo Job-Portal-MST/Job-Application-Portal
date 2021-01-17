@@ -7,9 +7,8 @@ const jobSchema = new Schema({
         type: String,
         required: true,
     },
-    recruiterId: {
-        type: Schema.Types.ObjectId,
-        ref: "user",
+    recruiterEmail: {
+        type: String,
         required: true,
     },
     maxApplicant: {
@@ -42,13 +41,16 @@ const jobSchema = new Schema({
         required: false,
     },
     salary: {
-        //Integer indica ng number of months. (0 (indefinite) - 6 months)
         type: Number,
         required: false,
     },
     rating: {
         type: Number,
-        required: false,
+        default: 0,
+    },
+    ratingCnt: {
+        type: Number,
+        default: 0,
     },
 });
 

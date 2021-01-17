@@ -21,14 +21,14 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @route POST job
+ * @route POST /job/create
  * @desc add job
  * @access PUBLIC
  */
-router.post("/", (req, res) => {
+router.post("/create", (req, res) => {
     const newjob = new job({
         title: req.body.title,
-        recruiterId: req.body.recruiterId,
+        recruiterEmail: req.body.recruiterEmail,
         maxApplicant: req.body.maxApplicant,
         maxPositions: req.body.maxPositions,
         postingDate: req.body.postingDate,
@@ -43,7 +43,6 @@ router.post("/", (req, res) => {
     newjob
         .save()
         .then((data) => {
-            console.log("new job =>" + data);
             res.send("ok");
         })
         .catch((error) => {

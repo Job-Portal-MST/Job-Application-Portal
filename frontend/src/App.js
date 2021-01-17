@@ -8,7 +8,7 @@ import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import Profile from "./components/user/Profile";
 import Welcome from "./components/user/Welcome";
-import { Fragment } from "react";
+import CreateJob from "./components/job/CreateJob";
 
 function App() {
     return (
@@ -20,6 +20,7 @@ function App() {
                 <Route path="/login" exact component={Login} />
                 <Route path="/register" exact component={Register} />
                 <Route path="/profile" exact component={Profile} />
+                <Route path="/createJob" exact component={CreateJob} />
             </div>
         </Router>
     );
