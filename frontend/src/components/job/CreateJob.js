@@ -59,6 +59,18 @@ class CreateJob extends Component {
                         <label>Salary: </label>
                         <input
                             id="salary"
+                            min="0"
+                            type="number"
+                            className="form-control"
+                            onChange={this.onChange(Number)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Duration: </label>
+                        <input
+                            id="duration"
+                            min="0"
+                            max="6"
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -78,6 +90,7 @@ class CreateJob extends Component {
                         <input
                             id="maxApplicant"
                             type="number"
+                            min="0"
                             className="form-control"
                             onChange={this.onChange(Number)}
                         />
@@ -87,6 +100,7 @@ class CreateJob extends Component {
                         <input
                             id="maxPositions"
                             type="number"
+                            min="0"
                             className="form-control"
                             onChange={this.onChange(Number)}
                         />

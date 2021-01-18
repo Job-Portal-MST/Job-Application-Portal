@@ -74,6 +74,19 @@ class JobEdit extends Component {
                         <input
                             id="salary"
                             value={this.state.salary}
+                            min="0"
+                            type="number"
+                            className="form-control"
+                            onChange={this.onChange(Number)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Duration: </label>
+                        <input
+                            id="duration"
+                            value={this.state.duration}
+                            min="0"
+                            max="6"
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -94,6 +107,7 @@ class JobEdit extends Component {
                         <input
                             id="maxApplicant"
                             value={this.state.maxApplicant}
+                            min="0"
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -104,6 +118,7 @@ class JobEdit extends Component {
                         <input
                             id="maxPositions"
                             value={this.state.maxPositions}
+                            min="0"
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
