@@ -38,6 +38,13 @@ class NavBar extends Component {
                         </Link>
                     </li>
                 );
+                items.push(
+                    <li className="navbar-item">
+                        <Link to="/myListings" className="nav-link">
+                            Listings
+                        </Link>
+                    </li>
+                );
             }
             items.push(
                 <li className="navbar-item">

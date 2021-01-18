@@ -6,11 +6,12 @@ const job = require("../models/job");
 
 /**
  * @route GET job
- * @desc return list of all jobs
+ * @desc return list of all jobs or by given id
  * @access PUBLIC
  */
 router.get("/", (req, res) => {
-    job.find({}, (err, data) => {
+    const query = req.query.email ? { recruiterEmail: req.query.email } : {};
+    job.find(query, (err, data) => {
         if (err) {
             console.log(err);
             res.send(httpCodes.StatusCodes.INTERNAL_SERVER_ERROR).json(err);
