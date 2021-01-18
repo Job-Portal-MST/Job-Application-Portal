@@ -56,6 +56,15 @@ class CreateJob extends Component {
                         />
                     </div>
                     <div className="form-group">
+                        <label>Salary: </label>
+                        <input
+                            id="salary"
+                            type="number"
+                            className="form-control"
+                            onChange={this.onChange(Number)}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label>Type: </label>
                         <input
                             id="title"
