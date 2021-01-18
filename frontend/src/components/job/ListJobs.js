@@ -29,25 +29,30 @@ class ListJobs extends Component {
             });
     }
 
-    createTableRow = (title, dop, applCnt, maxApplCnt) => {
-        return (
-            <tr>
-                <td style={cellStyle}>{title}</td>
-                <td style={cellStyle}>{dop}</td>
-                <td style={cellStyle}>{applCnt}</td>
-                <td style={cellStyle}>{maxApplCnt}</td>
-                <td style={cellStyle}>
-                    <button className="btn btn-warning" style={{ margin: "10px" }}>
-                        e
-                    </button>
-                </td>
-                <td style={cellStyle}>
-                    <button className="btn btn-danger" style={{ margin: "10px" }}>
-                        x
-                    </button>
-                </td>
-            </tr>
-        );
+    onView = (index) => (e) => {
+        e.preventDefault();
+        let url = new URLSearchParams({
+            jobid: this.state.jobs[index]._id,
+        });
+        url = "/product/view/" + url.toString();
+        console.log("view: " + url);
+    };
+
+    onEdit = (index) => (e) => {
+        e.preventDefault();
+        let url = new URLSearchParams({
+            jobid: this.state.jobs[index]._id,
+        });
+        url = "/product/view/" + url.toString();
+        console.log("edit: " + url);
+    };
+    onCancel = (index) => (e) => {
+        e.preventDefault();
+        let url = new URLSearchParams({
+            jobid: this.state.jobs[index]._id,
+        });
+        url = "/product/view/" + url.toString();
+        console.log("cancel: " + url);
     };
 
     render() {
@@ -55,8 +60,8 @@ class ListJobs extends Component {
             <Fragment>
                 <h1>Job listings</h1>
                 <table className="table table-hover responsive bordered">
-                    <thead class="thead-dark">
-                        <tr>
+                    <thead className="thead-dark">
+                        <tr key="head">
                             <th style={cellStyle} scope="col">
                                 Title
                             </th>
@@ -79,11 +84,39 @@ class ListJobs extends Component {
                     </thead>
                     <tbody>
                         {this.state.jobs.map((item, index) => {
-                            return this.createTableRow(
-                                item.title,
-                                new Date(item.postingDate).toDateString(),
-                                0,
-                                item.maxApplicant
+                            return (
+                                <tr key={index}>
+                                    <td onClick={this.onView(index)} style={cellStyle}>
+                                        {item.title}
+                                    </td>
+                                    <td onClick={this.onView(index)} style={cellStyle}>
+                                        {new Date(item.postingDate).toDateString()}
+                                    </td>
+                                    <td onClick={this.onView(index)} style={cellStyle}>
+                                        {item.appliedCnt}
+                                    </td>
+                                    <td onClick={this.onView(index)} style={cellStyle}>
+                                        {item.maxApplicant}
+                                    </td>
+                                    <td style={cellStyle} onClick={(e) => e.preventDefault()}>
+                                        <button
+                                            className="btn btn-warning"
+                                            style={{ margin: "10px" }}
+                                            onClick={this.onEdit(index)}
+                                        >
+                                            e
+                                        </button>
+                                    </td>
+                                    <td style={cellStyle}>
+                                        <button
+                                            className="btn btn-danger"
+                                            style={{ margin: "10px" }}
+                                            onClick={this.onCancel(index)}
+                                        >
+                                            x
+                                        </button>
+                                    </td>
+                                </tr>
                             );
                         })}
                     </tbody>

@@ -11,6 +11,11 @@ const jobSchema = new Schema({
         type: String,
         required: true,
     },
+    appliedCnt: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
     maxApplicant: {
         type: Number,
         required: true,
