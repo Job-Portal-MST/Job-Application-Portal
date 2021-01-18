@@ -6,12 +6,13 @@ const httpStatusCodes = require("http-status-codes").StatusCodes;
 const Job = require("../models/job");
 
 /**
- * @route GET job
- * @desc return list of all jobs or by given id
+ * @route GET /job
+ * @desc return list of all jobs or by given email or by id
  * @access PUBLIC
  */
 router.get("/", (req, res) => {
-    const query = req.query.email ? { recruiterEmail: req.query.email } : {};
+    let query = req.query.email ? { recruiterEmail: req.query.email } : {};
+    query = req.query.jobid ? { _id: req.query.jobid } : {};
     Job.find(query, (err, data) => {
         if (err) {
             console.log(err);
@@ -60,29 +61,30 @@ router.post("/create", (req, res) => {
  * @access PUBLIC
  */
 router.post("/edit", (req, res) => {
+    console.log(req.body);
     const query = { _id: req.body.job._id };
-    Job.findOne(query).then((job) => {
-        if (!job) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "job does not exists" });
-        }
-        for (const key in req.body.job) {
-            job[key] = req.body.job[key];
-        }
-        job.save()
-            .then((res) => {
-                res.json({ job });
-            })
-            .catch(res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" }));
-    });
-
-    newjob
-        .save()
-        .then((data) => {
-            res.send("ok");
+    Job.findOne(query)
+        .then((job) => {
+            if (!job) {
+                return res
+                    .status(httpStatusCodes.BAD_REQUEST)
+                    .json({ error: "job does not exists" });
+            }
+            for (const key in req.body.job) {
+                job[key] = req.body.job[key];
+            }
+            job.save()
+                .then((data) => {
+                    res.send("ok");
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
+                });
         })
-        .catch((error) => {
-            console.log(error);
-            res.status(httpCodes.StatusCodes.BAD_REQUEST).send(error);
+        .catch((err) => {
+            console.log(err);
+            res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
         });
 });
 

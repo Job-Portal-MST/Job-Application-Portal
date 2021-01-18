@@ -43,8 +43,9 @@ class ListJobs extends Component {
         let url = new URLSearchParams({
             jobid: this.state.jobs[index]._id,
         });
-        url = "/job/view/" + url.toString();
+        url = "/jobedit/?" + url.toString();
         console.log("edit: " + url);
+        window.location = url;
     };
     onCancel = (index) => (e) => {
         e.preventDefault();

@@ -10,6 +10,7 @@ import Profile from "./components/user/Profile";
 import Welcome from "./components/user/Welcome";
 import CreateJob from "./components/job/CreateJob";
 import ListJobs from "./components/job/ListJobs";
+import JobEdit from "./components/job/JobEdit";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/createJob" exact component={CreateJob} />
                 <Route path="/myListings" exact component={ListJobs} />
+                <Route path="/jobedit" exact component={JobEdit} />
             </div>
         </Router>
     );
