@@ -34,7 +34,7 @@ class ListJobs extends Component {
         let url = new URLSearchParams({
             jobid: this.state.jobs[index]._id,
         });
-        url = "/product/view/" + url.toString();
+        url = "/job/view/" + url.toString();
         console.log("view: " + url);
     };
 
@@ -43,16 +43,23 @@ class ListJobs extends Component {
         let url = new URLSearchParams({
             jobid: this.state.jobs[index]._id,
         });
-        url = "/product/view/" + url.toString();
+        url = "/job/view/" + url.toString();
         console.log("edit: " + url);
     };
     onCancel = (index) => (e) => {
         e.preventDefault();
-        let url = new URLSearchParams({
-            jobid: this.state.jobs[index]._id,
-        });
-        url = "/product/view/" + url.toString();
-        console.log("cancel: " + url);
+        const jobid = this.state.jobs[index]._id;
+        axios
+            .post("/job/remove", {
+                jobid,
+            })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch((res) => {
+                console.log(res);
+                alert("error");
+            });
     };
 
     render() {

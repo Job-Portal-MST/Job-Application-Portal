@@ -57,8 +57,12 @@ const jobSchema = new Schema({
         type: Number,
         default: 0,
     },
+    removed: {
+        type: String,
+        default: "no",
+    },
 });
 
-const job = mongoose.model("job", jobSchema);
+const Job = mongoose.model("job", jobSchema);
 
-module.exports = job;
+module.exports = Job;
