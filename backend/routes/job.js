@@ -4,6 +4,7 @@ const httpCodes = require("http-status-codes");
 const httpStatusCodes = require("http-status-codes").StatusCodes;
 
 const Job = require("../models/job");
+const User = require("../models/user");
 
 /**
  * @route GET /job
@@ -30,9 +31,10 @@ router.get("/", (req, res) => {
  * @access PUBLIC
  */
 router.get("/search", (req, res) => {
-    const query = req.query.title ? req.query.title : "";
+    const query = req.query.key ? req.query.key : "";
     Job.fuzzySearch(query)
         .then((data) => {
+            data = data.filter((item) => item.removed !== "yes");
             res.send(data);
         })
         .catch((err) => {
@@ -47,9 +49,17 @@ router.get("/search", (req, res) => {
  * @access PUBLIC
  */
 router.post("/create", (req, res) => {
+    let recName = "";
+    User.findOne({ email: req.body.recruiterEmail })
+        .then((data) => (recName = data))
+        .catch((error) => {
+            console.log(error);
+            res.status(httpCodes.StatusCodes.BAD_REQUEST).send(error);
+        });
     const newjob = new Job({
         title: req.body.title,
         recruiterEmail: req.body.recruiterEmail,
+        recruiterName: recName,
         maxApplicant: req.body.maxApplicant,
         maxPositions: req.body.maxPositions,
         postingDate: req.body.postingDate,

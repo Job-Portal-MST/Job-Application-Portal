@@ -12,6 +12,10 @@ const jobSchema = new Schema({
         type: String,
         required: true,
     },
+    recruiterName: {
+        type: String,
+        required: true,
+    },
     appliedCnt: {
         type: Number,
         required: true,
