@@ -25,6 +25,23 @@ router.get("/", (req, res) => {
 });
 
 /**
+ * @route GET /job/search
+ * @desc return list of all jobs by title
+ * @access PUBLIC
+ */
+router.get("/search", (req, res) => {
+    const query = req.query.title ? req.query.title : "";
+    Job.fuzzySearch(query)
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(httpStatusCodes.BAD_REQUEST).json({ error: "error" });
+        });
+});
+
+/**
  * @route POST /job/create
  * @desc add job
  * @access PUBLIC

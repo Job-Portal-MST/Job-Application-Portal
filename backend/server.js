@@ -22,7 +22,11 @@ app.use("/job", jobRouter);
 // db connection
 mongoose.connect("mongodb://127.0.0.1:27017/" + DB_NAME, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 });
+mongoose.Promise = global.Promise;
 const connection = mongoose.connection;
 connection.once("open", function () {
     console.log("MongoDB database connection established successfully !");

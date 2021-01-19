@@ -49,7 +49,7 @@ class CreateJob extends Component {
                     <div className="form-group">
                         <label>Title: </label>
                         <input
-                            id="type"
+                            id="title"
                             type="text"
                             className="form-control"
                             onChange={this.onChange(String)}
@@ -79,7 +79,7 @@ class CreateJob extends Component {
                     <div className="form-group">
                         <label>Type: </label>
                         <input
-                            id="title"
+                            id="type"
                             type="text"
                             className="form-control"
                             onChange={this.onChange(String)}

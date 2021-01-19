@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const mongoose_fuzzy_searching = require("mongoose-fuzzy-searching");
 
 // Create Schema
 const jobSchema = new Schema({
@@ -63,6 +64,14 @@ const jobSchema = new Schema({
     },
 });
 
+jobSchema.plugin(mongoose_fuzzy_searching, {
+    fields: [
+        {
+            name: "title",
+            minSize: 1,
+        },
+    ],
+});
 const Job = mongoose.model("job", jobSchema);
 
 module.exports = Job;

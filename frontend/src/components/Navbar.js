@@ -45,6 +45,14 @@ class NavBar extends Component {
                         </Link>
                     </li>
                 );
+            } else {
+                items.push(
+                    <li className="navbar-item">
+                        <Link to="/jobsearch" className="nav-link">
+                            Search Jobs
+                        </Link>
+                    </li>
+                );
             }
             items.push(
                 <li className="navbar-item">
