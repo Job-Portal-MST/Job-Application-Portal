@@ -12,6 +12,7 @@ import CreateJob from "./components/job/CreateJob";
 import ListJobs from "./components/job/ListJobs";
 import JobEdit from "./components/job/JobEdit";
 import SearchJobs from "./components/job/SearchJobs";
+import ApplyJob from "./components/job/ApplyJob";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/myListings" exact component={ListJobs} />
                 <Route path="/jobedit" exact component={JobEdit} />
                 <Route path="/jobsearch" exact component={SearchJobs} />
+                <Route path="/jobapply" exact component={ApplyJob} />
             </div>
         </Router>
     );

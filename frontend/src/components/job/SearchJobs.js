@@ -27,6 +27,15 @@ class SearchJobs extends Component {
             });
     };
 
+    applyJob = (index) => (e) => {
+        e.preventDefault();
+        let url = new URLSearchParams({
+            jobid: this.state.jobs[index]._id,
+        });
+        url = "/jobapply/?" + url.toString();
+        window.location = url;
+    };
+
     render() {
         return (
             <div className="container">
@@ -58,7 +67,7 @@ class SearchJobs extends Component {
                         </button>
                     </div>
                 </form>
-                {/* //Title, Recruiter Name, Recruiter Ra ng, Salary, Dura on, Deadline */}
+
                 <div className="container">
                     <table className="table table-hover responsive bordered">
                         <thead className="thead-dark">
@@ -76,12 +85,14 @@ class SearchJobs extends Component {
                             {this.state.jobs.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.title}</td>
-                                        <td>{item.recruiterName}</td>
-                                        <td>{item.rating}</td>
-                                        <td>{item.salary}</td>
-                                        <td>{item.duration}</td>
-                                        <td>{new Date(item.deadline).toLocaleString()}</td>
+                                        <td onClick={this.applyJob(index)}>{item.title}</td>
+                                        <td onClick={this.applyJob(index)}>{item.recruiterName}</td>
+                                        <td onClick={this.applyJob(index)}>{item.rating}</td>
+                                        <td onClick={this.applyJob(index)}>{item.salary}</td>
+                                        <td onClick={this.applyJob(index)}>{item.duration}</td>
+                                        <td onClick={this.applyJob(index)}>
+                                            {new Date(item.deadline).toLocaleString()}
+                                        </td>
                                         <td onClick={(e) => console.log(index)}>???</td>
                                     </tr>
                                 );
