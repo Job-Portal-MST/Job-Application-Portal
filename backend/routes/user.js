@@ -72,7 +72,7 @@ router.post("/register", (req, res) => {
                     })
                     .catch((err) => {
                         console.log(err);
-                        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).send(err);
+                        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: err });
                     });
             });
         }

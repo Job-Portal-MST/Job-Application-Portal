@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const appnSchema = new Schema({
-    job: {
+    jobid: {
         type: Schema.Types.ObjectId,
         ref: "job",
         required: true,
@@ -15,7 +15,7 @@ const appnSchema = new Schema({
     },
     status: {
         type: String,
-        default: "pending",
+        default: "applied",
     },
     bio: {
         type: String,
@@ -23,6 +23,4 @@ const appnSchema = new Schema({
     },
 });
 
-const application = mongoose.model("application", appnSchema);
-
-module.exports = application;
+module.exports = Application = mongoose.model("application", appnSchema);

@@ -7,6 +7,7 @@ const PORT = 4000;
 const logger = require("./logger");
 const userRouter = require("./routes/user");
 const jobRouter = require("./routes/job");
+const appRouter = require("./routes/application");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(logger);
 // adding routes
 app.use("/user", userRouter);
 app.use("/job", jobRouter);
+app.use("/application", appRouter);
 
 // db connection
 mongoose.connect("mongodb://127.0.0.1:27017/" + DB_NAME, {

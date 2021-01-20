@@ -45,8 +45,7 @@ class Register extends Component {
                 window.location = "/";
             })
             .catch((res) => {
-                console.log(res);
-                alert("Error:" + toString(res[Object.keys(res)[0]]));
+                alert(res.response.data.error);
             });
     };
 

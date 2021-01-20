@@ -41,6 +41,14 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    accepted: {
+        type: String,
+        default: "no",
+    },
+    bossEmail: {
+        type: String,
+        default: "",
+    },
     /////////////////
 });
 
