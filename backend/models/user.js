@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    jobId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: false,
+        default: null,
+    },
     /////////////////
 });
 

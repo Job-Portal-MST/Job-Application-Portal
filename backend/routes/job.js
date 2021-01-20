@@ -46,11 +46,11 @@ router.get("/search", (req, res) => {
 router.post("/create", (req, res) => {
     const recEmail = req.body.recruiterEmail;
     User.findOne({ email: recEmail })
-        .then((recName) => {
+        .then((recruiter) => {
             const newjob = new Job({
                 title: req.body.title,
-                recruiterEmail: req.body.recruiterEmail,
-                recruiterName: recName,
+                recruiterEmail: recruiter.email,
+                recruiterName: recruiter.name,
                 maxApplicant: req.body.maxApplicant,
                 maxPositions: req.body.maxPositions,
                 postingDate: req.body.postingDate,
@@ -81,7 +81,7 @@ router.post("/edit", (req, res) => {
     Job.findById(givenJob._id)
         .then((job) => {
             if (!job) {
-                return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST)("");
             }
             for (const key in givenJob) {
                 job[key] = givenJob[key];
@@ -104,23 +104,23 @@ router.post("/remove", (req, res) => {
     const jobId = req.body.jobid;
     Job.findById(jobId).then((job) => {
         if (!job) {
-            return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST);
+            return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST)("");
         }
         job.removed = "yes";
         Application.find({ jobid: jobId }).then((data) => {
             for (const iApp of data) {
+                if (iApp.status === "accepted") {
+                    Job.findByIdAndUpdate(iApp.applicant, { accepted: "no" });
+                }
                 iApp.status = "rejected";
                 iApp.save().then().catch(console.log);
             }
         });
         job.save()
             .then((job) => {
-                res.json({ job });
+                res.json({ ok: true });
             })
-            .catch((err) => {
-                console.log(err);
-                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
-            });
+            .catch(errorSend(res, "error in saving data"));
     });
 });
 
