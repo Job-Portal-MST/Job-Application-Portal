@@ -63,6 +63,7 @@ class JobEdit extends Component {
                         <label>Title: </label>
                         <input
                             id="title"
+                            required
                             value={this.state.title}
                             type="text"
                             className="form-control"
@@ -75,6 +76,8 @@ class JobEdit extends Component {
                             id="salary"
                             value={this.state.salary}
                             min="0"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -87,6 +90,8 @@ class JobEdit extends Component {
                             value={this.state.duration}
                             min="0"
                             max="6"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -95,6 +100,7 @@ class JobEdit extends Component {
                     <div className="form-group">
                         <label>Type: </label>
                         <input
+                            required
                             id="type"
                             value={this.state.type}
                             type="text"
@@ -108,6 +114,8 @@ class JobEdit extends Component {
                             id="maxApplicant"
                             value={this.state.maxApplicant}
                             min="0"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -119,6 +127,8 @@ class JobEdit extends Component {
                             id="maxPositions"
                             value={this.state.maxPositions}
                             min="0"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -128,6 +138,7 @@ class JobEdit extends Component {
                         <label>Posting Date: </label>
                         <input
                             id="postingDate"
+                            required
                             value={new Date(this.state.postingDate).toLocaleDateString("en-CA")}
                             type="date"
                             className="form-control"
@@ -142,6 +153,7 @@ class JobEdit extends Component {
                         <label>Deadline: </label>
                         <div className="form-group">
                             <input
+                                required
                                 className="form-control"
                                 value={new Date(this.state.deadline).toLocaleDateString("en-CA")}
                                 type="date"
@@ -159,6 +171,7 @@ class JobEdit extends Component {
                         </div>
                         <div className="form-group">
                             <input
+                                required
                                 className="form-control"
                                 type="time"
                                 value={new Date(this.state.deadline).toLocaleTimeString([], {
@@ -199,6 +212,7 @@ class JobEdit extends Component {
                             return (
                                 <div>
                                     <input
+                                        required
                                         value={item}
                                         onChange={(e) => {
                                             e.preventDefault();

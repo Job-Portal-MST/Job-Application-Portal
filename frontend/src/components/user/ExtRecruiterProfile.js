@@ -32,7 +32,7 @@ class ExtRecruiterProfile extends Component {
                         value={this.props.user.contact}
                         required
                         type="tel"
-                        pattern="/(5|6|7|8|9)\d{9}/"
+                        pattern="(5|6|7|8|9)\d{9}"
                         className="form-control"
                         onChange={this.onChange}
                     />

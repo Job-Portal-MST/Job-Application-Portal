@@ -1,10 +1,12 @@
 const express = require("express");
+const router = express.Router();
 const bcrypt = require("bcryptjs");
 const httpStatusCodes = require("http-status-codes").StatusCodes;
-const isEmpty = require("is-empty");
-const User = require("../models/user");
 
-const router = express.Router();
+const Job = require("../models/job");
+const User = require("../models/user");
+const Application = require("../models/application");
+const { errorSend } = require("../misc/tools");
 
 /**
  * @route   POST     /user/login
@@ -14,27 +16,32 @@ const router = express.Router();
 router.post("/login", (req, res) => {
     // TODO :: perform validation
     const { email, password } = req.body;
-    User.findOne({ email }).then((user) => {
-        if (!user) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id does not exists" });
-        }
-        bcrypt.compare(password, user.password).then((matched) => {
-            if (matched) {
-                console.log("ok");
-                res.json({
-                    ok: true,
-                    user: {
-                        email,
-                        isRecruiter: user.isRecruiter,
-                    },
-                });
-            } else {
-                res.status(httpStatusCodes.UNAUTHORIZED).json({
-                    error: "incorrect passowrd",
-                });
+    User.findOne({ email })
+        .then((user) => {
+            if (!user) {
+                return errorSend(res, "id does not exists", httpStatusCodes.BAD_REQUEST)("");
             }
-        });
-    });
+            bcrypt
+                .compare(password, user.password)
+                .then((matched) => {
+                    if (matched) {
+                        console.log("ok");
+                        res.json({
+                            ok: true,
+                            user: {
+                                email,
+                                isRecruiter: user.isRecruiter,
+                            },
+                        });
+                    } else {
+                        res.status(httpStatusCodes.UNAUTHORIZED).json({
+                            error: "incorrect passowrd",
+                        });
+                    }
+                })
+                .catch(errorSend(res, "error in password checking"));
+        })
+        .catch(errorSend(res, "error in searching user"));
 });
 
 /**
@@ -44,39 +51,38 @@ router.post("/login", (req, res) => {
  */
 router.post("/register", (req, res) => {
     // TODO :: perform validation
-    User.findOne({ email: req.body.email }).then((user) => {
-        if (user) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id exists" });
-        } else {
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password,
-                isRecruiter: req.body.isRecruiter,
-            });
-            if (newUser.isRecruiter == "true") {
-                newUser.bio = req.body.bio;
-                newUser.contact = req.body.contact;
+    User.findOne({ email: req.body.email })
+        .then((user) => {
+            if (user) {
+                return errorSend(res, "id exists with this email", httpStatusCodes.BAD_REQUEST)("");
             } else {
-                newUser.ed = req.body.ed;
-                newUser.skills = req.body.skills;
-            }
+                const newUser = new User({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password,
+                    isRecruiter: req.body.isRecruiter,
+                });
+                if (newUser.isRecruiter === "yes") {
+                    newUser.bio = req.body.bio;
+                    newUser.contact = req.body.contact;
+                } else {
+                    newUser.ed = req.body.ed;
+                    newUser.skills = req.body.skills;
+                }
 
-            bcrypt.hash(newUser.password, 10, (err, hash) => {
-                if (err) throw err;
-                newUser.password = hash;
-                newUser
-                    .save()
-                    .then((user) => {
-                        res.json({ user });
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: err });
-                    });
-            });
-        }
-    });
+                bcrypt.hash(newUser.password, 10, (err, hash) => {
+                    if (err) throw err;
+                    newUser.password = hash;
+                    newUser
+                        .save()
+                        .then((user) => {
+                            res.json({ user });
+                        })
+                        .catch(errorSend(res, "error while saving account"));
+                });
+            }
+        })
+        .catch(errorSend(res, "error while processing db"));
 });
 
 /**
@@ -87,12 +93,14 @@ router.post("/register", (req, res) => {
 router.get("/profile", (req, res) => {
     // TODO :: perform validation
     const { email } = req.query;
-    User.findOne({ email }).then((user) => {
-        if (!user) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id does not exists" });
-        }
-        res.send(user);
-    });
+    User.findOne({ email })
+        .then((user) => {
+            if (!user) {
+                return errorSend(res, "id does not exist", httpStatusCodes.BAD_REQUEST)("");
+            }
+            res.send(user);
+        })
+        .catch(errorSend(res, "error while processing db"));
 });
 
 /**
@@ -105,7 +113,7 @@ router.post("/profile", (req, res) => {
     const email = req.body.email;
     User.findOne({ email }).then((user) => {
         if (!user) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "id does not exists" });
+            return errorSend(res, "id does not exist", httpStatusCodes.BAD_REQUEST)("");
         }
         for (const key in req.body.user) {
             user[key] = req.body.user[key];
@@ -114,10 +122,7 @@ router.post("/profile", (req, res) => {
             .then((user) => {
                 res.json({ user });
             })
-            .catch((err) => {
-                console.log(err);
-                res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).send(err);
-            });
+            .catch(errorSend(res, "error in saving data"));
     });
 });
 

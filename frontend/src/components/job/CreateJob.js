@@ -49,6 +49,7 @@ class CreateJob extends Component {
                     <div className="form-group">
                         <label>Title: </label>
                         <input
+                            required
                             id="title"
                             type="text"
                             className="form-control"
@@ -60,6 +61,8 @@ class CreateJob extends Component {
                         <input
                             id="salary"
                             min="0"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -71,6 +74,8 @@ class CreateJob extends Component {
                             id="duration"
                             min="0"
                             max="6"
+                            step="1"
+                            required
                             type="number"
                             className="form-control"
                             onChange={this.onChange(Number)}
@@ -81,6 +86,7 @@ class CreateJob extends Component {
                         <input
                             id="type"
                             type="text"
+                            required
                             className="form-control"
                             onChange={this.onChange(String)}
                         />
@@ -91,6 +97,8 @@ class CreateJob extends Component {
                             id="maxApplicant"
                             type="number"
                             min="0"
+                            step="1"
+                            required
                             className="form-control"
                             onChange={this.onChange(Number)}
                         />
@@ -101,6 +109,8 @@ class CreateJob extends Component {
                             id="maxPositions"
                             type="number"
                             min="0"
+                            step="1"
+                            required
                             className="form-control"
                             onChange={this.onChange(Number)}
                         />
@@ -110,6 +120,7 @@ class CreateJob extends Component {
                         <input
                             id="postingDate"
                             type="date"
+                            required
                             className="form-control"
                             onChange={(e) => {
                                 e.preventDefault();
@@ -124,6 +135,7 @@ class CreateJob extends Component {
                             <input
                                 className="form-control"
                                 type="date"
+                                required
                                 max="9999-12-12T00:00:00.00"
                                 onChange={(e) => {
                                     e.preventDefault();
@@ -138,6 +150,7 @@ class CreateJob extends Component {
                         </div>
                         <div className="form-group">
                             <input
+                                required
                                 className="form-control"
                                 type="time"
                                 max="9999-12-12T00:00:00.00"
@@ -172,6 +185,7 @@ class CreateJob extends Component {
                             return (
                                 <div>
                                     <input
+                                        required
                                         value={item}
                                         onChange={(e) => {
                                             e.preventDefault();

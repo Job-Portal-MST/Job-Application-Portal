@@ -5,11 +5,7 @@ const StatusCodes = require("http-status-codes").StatusCodes;
 const Job = require("../models/job");
 const User = require("../models/user");
 const Application = require("../models/application");
-
-const errorSend = (res, msg, sts = StatusCodes.INTERNAL_SERVER_ERROR) => (err) => {
-    console.log(err);
-    res.status(sts).json({ error: msg });
-};
+const { errorSend } = require("../misc/tools");
 
 /**
  * @route POST /application/apply
@@ -23,24 +19,28 @@ router.post("/apply", (req, res) => {
     Job.findOne(query)
         .then((job) => {
             if (!job) {
-                return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST)("");
             } else if (job.removed === "yes") {
-                return errorSend(res, "job removed", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "job removed", StatusCodes.BAD_REQUEST)("");
             } else if (job["appliedCnt"] >= job["maxApplicant"]) {
-                return errorSend(res, "job max applications reached", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "job max applications reached", StatusCodes.BAD_REQUEST)("");
             } else if (new Date(job.deadline).getTime() < new Date().getTime()) {
-                return errorSend(res, "job deadline over", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "job deadline over", StatusCodes.BAD_REQUEST)("");
             } else {
                 User.findOne({ email: appEmail })
                     .then((user) => {
                         if (!user) {
-                            return errorSend(res, "user does not exist", StatusCodes.BAD_REQUEST);
+                            return errorSend(
+                                res,
+                                "user doesn't exist",
+                                StatusCodes.BAD_REQUEST
+                            )("");
                         } else if (user.applyCnt >= 10) {
                             return errorSend(
                                 res,
                                 "user can not apply more",
                                 StatusCodes.BAD_REQUEST
-                            );
+                            )("");
                         }
                         //every case covered (hope so)
                         user.applyCnt += 1;
@@ -76,7 +76,7 @@ router.post("/shortlist", (req, res) => {
     Application.findById(appId)
         .then((application) => {
             if (!application) {
-                return errorSend(res, "application does not exists", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "application doesn't exists", StatusCodes.BAD_REQUEST)("");
             }
             application.status = "shortlisted";
             application
@@ -100,7 +100,7 @@ router.post("/accept", (req, res) => {
     Application.findById(appId)
         .then((application) => {
             if (!application) {
-                return errorSend(res, "application not found", StatusCodes.BAD_REQUEST);
+                return errorSend(res, "application not found", StatusCodes.BAD_REQUEST)("");
             }
             Job.findById(application.jobid)
                 .then((job) => {
@@ -138,7 +138,7 @@ router.post("/accept", (req, res) => {
                         .catch(errorSend(res, "err in finding user"));
 
                     if (job.maxPositions <= 0) {
-                        return errorSend(res, "no more positions", StatusCodes.BAD_REQUEST);
+                        return errorSend(res, "no more positions", StatusCodes.BAD_REQUEST)("");
                     }
                 })
                 .catch(errorSend(res, "error in job search"));
@@ -158,7 +158,7 @@ router.post("/reject", (req, res) => {
             if (!application) {
                 return res
                     .status(StatusCodes.BAD_REQUEST)
-                    .json({ error: "application does not exists" });
+                    .json({ error: "application does not exists" })("");
             }
             Job.findById(application.jobid)
                 .then((job) => {

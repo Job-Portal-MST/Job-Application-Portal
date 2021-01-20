@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const httpCodes = require("http-status-codes");
-const httpStatusCodes = require("http-status-codes").StatusCodes;
+const StatusCodes = require("http-status-codes").StatusCodes;
 
 const Job = require("../models/job");
 const User = require("../models/user");
+const Application = require("../models/application");
+const { errorSend } = require("../misc/tools");
 
 /**
  * @route GET /job
@@ -14,15 +15,12 @@ const User = require("../models/user");
 router.get("/", (req, res) => {
     let query = req.query.email ? { recruiterEmail: req.query.email } : {};
     query = req.query.jobid ? { _id: req.query.jobid } : {};
-    Job.find(query, (err, data) => {
-        if (err) {
-            console.log(err);
-            res.send(httpCodes.StatusCodes.INTERNAL_SERVER_ERROR).json(err);
-        } else {
+    Job.find(query)
+        .then((data) => {
             data = data.filter((item) => item.removed !== "yes");
             res.json(data);
-        }
-    });
+        })
+        .catch(errorSend(res, "error in job search"));
 });
 
 /**
@@ -37,10 +35,7 @@ router.get("/search", (req, res) => {
             data = data.filter((item) => item.removed !== "yes");
             res.send(data);
         })
-        .catch((err) => {
-            console.log(err);
-            res.status(httpStatusCodes.BAD_REQUEST).json({ error: "error" });
-        });
+        .catch(errorSend(res, "error in searching"));
 });
 
 /**
@@ -49,37 +44,31 @@ router.get("/search", (req, res) => {
  * @access PUBLIC
  */
 router.post("/create", (req, res) => {
-    let recName = "";
-    User.findOne({ email: req.body.recruiterEmail })
-        .then((data) => (recName = data))
-        .catch((error) => {
-            console.log(error);
-            res.status(httpCodes.StatusCodes.BAD_REQUEST).send(error);
-        });
-    const newjob = new Job({
-        title: req.body.title,
-        recruiterEmail: req.body.recruiterEmail,
-        recruiterName: recName,
-        maxApplicant: req.body.maxApplicant,
-        maxPositions: req.body.maxPositions,
-        postingDate: req.body.postingDate,
-        deadline: req.body.deadline,
-        requiredSkills: req.body.requiredSkills,
-        type: req.body.type,
-        duration: req.body.duration,
-        salary: req.body.salary,
-        rating: req.body.rating,
-    });
-
-    newjob
-        .save()
-        .then((data) => {
-            res.send("ok");
+    const recEmail = req.body.recruiterEmail;
+    User.findOne({ email: recEmail })
+        .then((recName) => {
+            const newjob = new Job({
+                title: req.body.title,
+                recruiterEmail: req.body.recruiterEmail,
+                recruiterName: recName,
+                maxApplicant: req.body.maxApplicant,
+                maxPositions: req.body.maxPositions,
+                postingDate: req.body.postingDate,
+                deadline: req.body.deadline,
+                requiredSkills: req.body.requiredSkills,
+                type: req.body.type,
+                duration: req.body.duration,
+                salary: req.body.salary,
+                rating: req.body.rating,
+            });
+            newjob
+                .save()
+                .then((data) => {
+                    res.send("ok");
+                })
+                .catch(errorSend(res, "error in saving job"));
         })
-        .catch((error) => {
-            console.log(error);
-            res.status(httpCodes.StatusCodes.BAD_REQUEST).send(error);
-        });
+        .catch(errorSend(res, "error in user search"));
 });
 
 /**
@@ -88,31 +77,22 @@ router.post("/create", (req, res) => {
  * @access PUBLIC
  */
 router.post("/edit", (req, res) => {
-    console.log(req.body);
-    const query = { _id: req.body.job._id };
-    Job.findOne(query)
+    const givenJob = req.body.job;
+    Job.findById(givenJob._id)
         .then((job) => {
             if (!job) {
-                return res
-                    .status(httpStatusCodes.BAD_REQUEST)
-                    .json({ error: "job does not exists" });
+                return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST);
             }
-            for (const key in req.body.job) {
-                job[key] = req.body.job[key];
+            for (const key in givenJob) {
+                job[key] = givenJob[key];
             }
             job.save()
                 .then((data) => {
                     res.send("ok");
                 })
-                .catch((err) => {
-                    console.log(err);
-                    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
-                });
+                .catch(errorSend(res, "error in job saving"));
         })
-        .catch((err) => {
-            console.log(err);
-            res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
-        });
+        .catch(errorSend(res, "error in job search"));
 });
 
 /**
@@ -121,19 +101,25 @@ router.post("/edit", (req, res) => {
  * @access PUBLIC
  */
 router.post("/remove", (req, res) => {
-    const query = { _id: req.body.jobid };
-    Job.findOne(query).then((job) => {
+    const jobId = req.body.jobid;
+    Job.findById(jobId).then((job) => {
         if (!job) {
-            return res.status(httpStatusCodes.BAD_REQUEST).json({ error: "job does not exists" });
+            return errorSend(res, "job does not exists", StatusCodes.BAD_REQUEST);
         }
         job.removed = "yes";
+        Application.find({ jobid: jobId }).then((data) => {
+            for (const iApp of data) {
+                iApp.status = "rejected";
+                iApp.save().then().catch(console.log);
+            }
+        });
         job.save()
             .then((job) => {
                 res.json({ job });
             })
             .catch((err) => {
                 console.log(err);
-                res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "error" });
             });
     });
 });
