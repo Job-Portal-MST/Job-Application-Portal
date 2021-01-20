@@ -13,6 +13,7 @@ class BasicProfile extends Component {
                 <div className="form-group">
                     <label>Name: </label>
                     <input
+                        required
                         id="name"
                         type="text"
                         className="form-control"
@@ -26,8 +27,9 @@ class BasicProfile extends Component {
                     <div className="form-group">
                         <label>Email: </label>
                         <input
+                            required
                             id="email"
-                            type="text"
+                            type="email"
                             className="form-control"
                             onChange={this.onChange}
                             value={this.props.email}

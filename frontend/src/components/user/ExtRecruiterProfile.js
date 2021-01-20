@@ -11,21 +11,28 @@ class ExtRecruiterProfile extends Component {
         return (
             <Fragment>
                 <div className="form-group">
-                    <label>Bio: </label>
-                    <input
+                    <label>
+                        Bio <small>(max 250 chars.):</small>{" "}
+                    </label>
+                    <textarea
+                        required
                         id="bio"
                         value={this.props.user.bio}
-                        type="text"
+                        maxLength="250"
                         className="form-control"
                         onChange={this.onChange}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Contact: </label>
+                    <label>
+                        Contact <small>(10 digit phone no.):</small>
+                    </label>
                     <input
                         id="contact"
                         value={this.props.user.contact}
-                        type="text"
+                        required
+                        type="tel"
+                        pattern="/(5|6|7|8|9)\d{9}/"
                         className="form-control"
                         onChange={this.onChange}
                     />

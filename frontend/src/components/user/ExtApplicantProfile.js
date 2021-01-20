@@ -28,6 +28,7 @@ class ExtApplicantProfile extends Component {
                         return (
                             <div>
                                 <input
+                                    required
                                     value={skItem}
                                     onChange={(e) => {
                                         e.preventDefault();
@@ -72,6 +73,7 @@ class ExtApplicantProfile extends Component {
                             <div>
                                 <label style={{ margin: "4px" }}>Institue Name:</label>
                                 <input
+                                    required
                                     value={edItem.insti}
                                     onChange={(e) => {
                                         e.preventDefault();
@@ -83,6 +85,11 @@ class ExtApplicantProfile extends Component {
                                 />
                                 <label style={{ margin: "4px" }}>Start Year</label>
                                 <input
+                                    type="number"
+                                    min="1900"
+                                    max="9999"
+                                    step="1"
+                                    required
                                     value={edItem.startYear}
                                     onChange={(e) => {
                                         e.preventDefault();
@@ -94,6 +101,11 @@ class ExtApplicantProfile extends Component {
                                 />
                                 <label style={{ margin: "4px" }}>End Year</label>
                                 <input
+                                    type="number"
+                                    min="1900"
+                                    max="9999"
+                                    step="1"
+                                    required
                                     value={edItem.endYear}
                                     onChange={(e) => {
                                         e.preventDefault();
