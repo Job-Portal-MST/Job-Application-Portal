@@ -28,9 +28,8 @@ class JobEdit extends Component {
             .then((res) => {
                 this.setState(res.data[0]);
             })
-            .catch((err) => {
-                console.log(err);
-                alert("error");
+            .catch((res) => {
+                alert(res.response.data.error);
             });
     }
     onChange = (type) => (e) => {
@@ -48,9 +47,8 @@ class JobEdit extends Component {
                 alert("changes done successfully!");
                 window.location.reload();
             })
-            .catch((err) => {
-                console.log(err);
-                alert("error");
+            .catch((res) => {
+                alert(res.response.data.error);
             });
     };
 

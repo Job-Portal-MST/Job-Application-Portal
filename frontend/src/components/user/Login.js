@@ -29,7 +29,7 @@ class Login extends Component {
                 window.location = "/";
             })
             .catch((res) => {
-                alert("Invalid credentials!");
+                alert(res.response.data.error);
             });
     };
     render() {

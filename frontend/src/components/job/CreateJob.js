@@ -36,8 +36,7 @@ class CreateJob extends Component {
                 window.location.reload();
             })
             .catch((res) => {
-                console.log(res);
-                alert("error");
+                alert(res.response.data.error);
             });
     };
 

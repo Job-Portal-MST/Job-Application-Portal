@@ -24,8 +24,7 @@ class ListJobs extends Component {
                 this.setState({ jobs: res.data });
             })
             .catch((res) => {
-                console.log(res);
-                alert("error");
+                alert(res.response.data.error);
             });
     }
 

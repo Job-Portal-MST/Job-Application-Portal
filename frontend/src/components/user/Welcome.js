@@ -22,8 +22,7 @@ class Welcome extends Component {
                     this.setState({ name: res.data.name });
                 })
                 .catch((res) => {
-                    console.log(res);
-                    alert("error");
+                    alert(res.response.data.error);
                 });
     }
     render() {

@@ -37,8 +37,7 @@ class Profile extends Component {
                 });
             })
             .catch((res) => {
-                console.log(res);
-                alert("error");
+                alert(res.response.data.error);
             });
     }
     handleArrayChange = (arr, chIndex, chItem) => {
@@ -72,8 +71,7 @@ class Profile extends Component {
                 window.location.reload();
             })
             .catch((res) => {
-                console.log(res);
-                alert("error");
+                alert(res.response.data.error);
             });
     };
 
