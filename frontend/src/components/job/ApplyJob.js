@@ -36,7 +36,7 @@ class ApplyJob extends Component {
         axios
             .post("/application/apply", {
                 bio: this.state.bio,
-                email: this.state.job.recruiterEmail,
+                email: ls.get("email"),
                 jobid: this.state.job._id,
             })
             .then((res) => {

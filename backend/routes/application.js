@@ -8,6 +8,29 @@ const Application = require("../models/application");
 const { errorSend } = require("../misc/tools");
 
 /**
+ * @route GET /application/
+ * @desc get list of applications by an applicant
+ * @access PUBLIC
+ */
+
+router.get("/", (req, res) => {
+    const userEmail = req.query.email;
+    User.findOne({ email: userEmail })
+        .then((user) => {
+            if (!user) {
+                return errorSend(res, "invalid id", StatusCodes.BAD_REQUEST);
+            }
+            console.log(user._id);
+            Application.find({ applicant: user._id })
+                .then((data) => {
+                    res.send(data);
+                })
+                .catch(errorSend(res, "error in searching applications"));
+        })
+        .catch(errorSend(res, "error in finding user"));
+});
+
+/**
  * @route POST /application/apply
  * @desc apply for job
  * @access PUBLIC

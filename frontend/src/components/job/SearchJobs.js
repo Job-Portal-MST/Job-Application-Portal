@@ -9,6 +9,16 @@ class SearchJobs extends Component {
         this.state = { key: "", jobs: [] };
     }
 
+    createApplyButton = (job) => {
+        if (job.applied === "yes") {
+            return <button>Applied</button>;
+        } else if (job.appliedCnt >= job.maxApplicant) {
+            return <button>Full</button>;
+        } else {
+            return <button>Apply</button>;
+        }
+    };
+
     componentDidMount() {
         this.updateJobs();
     }
@@ -19,7 +29,22 @@ class SearchJobs extends Component {
                 params: { key: this.state.key },
             })
             .then((res) => {
-                this.setState({ jobs: res.data });
+                let jobList = res.data;
+                axios
+                    .get("/application", { params: { email: ls.get("email") } })
+                    .then((res) => {
+                        const myAppList = res.data;
+                        for (const job of jobList) {
+                            let tmp = myAppList.filter((app) => app.jobid === job._id);
+                            if (tmp.length > 0) job.applied = "yes";
+                            else job.applied = "no";
+                        }
+                        this.setState({ jobs: jobList });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert("error");
+                    });
             })
             .catch((res) => {
                 alert(res.response.data.error);
@@ -92,7 +117,9 @@ class SearchJobs extends Component {
                                         <td onClick={this.applyJob(index)}>
                                             {new Date(item.deadline).toLocaleString()}
                                         </td>
-                                        <td onClick={(e) => console.log(index)}>???</td>
+                                        <td onClick={(e) => console.log(index)}>
+                                            {this.createApplyButton(item)}
+                                        </td>
                                     </tr>
                                 );
                             })}
