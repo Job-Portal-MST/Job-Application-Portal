@@ -9,13 +9,13 @@ class SearchJobs extends Component {
         this.state = { key: "", jobs: [] };
     }
 
-    createApplyButton = (job) => {
+    createApplyButton = (job, index) => {
         if (job.applied === "yes") {
             return <button>Applied</button>;
         } else if (job.appliedCnt >= job.maxApplicant) {
             return <button>Full</button>;
         } else {
-            return <button>Apply</button>;
+            return <button onClick={this.applyJob(index)}>Apply</button>;
         }
     };
 
@@ -118,7 +118,7 @@ class SearchJobs extends Component {
                                             {new Date(item.deadline).toLocaleString()}
                                         </td>
                                         <td onClick={(e) => console.log(index)}>
-                                            {this.createApplyButton(item)}
+                                            {this.createApplyButton(item, index)}
                                         </td>
                                     </tr>
                                 );

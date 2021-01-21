@@ -41,7 +41,7 @@ class ApplyJob extends Component {
             })
             .then((res) => {
                 alert("success");
-                window.location.reload();
+                window.location = "/";
             })
             .catch((res) => {
                 alert(res.response.data.error);
