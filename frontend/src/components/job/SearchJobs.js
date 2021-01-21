@@ -19,6 +19,52 @@ class SearchJobs extends Component {
         }
     };
 
+    sortJobsfunc = (key, reverse = false) => (e) => {
+        e.preventDefault();
+        const m = reverse ? -1 : 1;
+        this.setState({ jobs: this.state.jobs.sort((a, b) => m * (a[key] - b[key])) });
+    };
+
+    configureSection = () => {
+        const sortBtn = (msg, func) => (
+            <button style={{ margin: "2px" }} className="btn btn-sm btn-info" onClick={func}>
+                {msg}
+            </button>
+        );
+        return (
+            <div style={{ margin: "10px" }}>
+                <div>
+                    {sortBtn("Sort by Salary", this.sortJobsfunc("salary"))}
+                    {sortBtn("Sort by Salary", this.sortJobsfunc("salary", true))}
+                    {sortBtn("Sort by Rating", this.sortJobsfunc("rating"))}
+                    {sortBtn("Sort by Rating", this.sortJobsfunc("rating", true))}
+                    {sortBtn("Sort by Duration", this.sortJobsfunc("duration"))}
+                    {sortBtn("Sort by Duration", this.sortJobsfunc("duration", true))}
+                    <br />
+                    Filter:
+                    <form>
+                        <div className="dropdown">
+                            <select id="type" onChange={console.log}>
+                                <option className="dropdown-item" value="Any">
+                                    Any
+                                </option>
+                                <option className="dropdown-item" value="Work From Home">
+                                    Work From Home
+                                </option>
+                                <option className="dropdown-item" value="Part Time">
+                                    Part Time
+                                </option>
+                                <option className="dropdown-item" value="Full Time">
+                                    Full Time
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        );
+    };
+
     componentDidMount() {
         this.updateJobs();
     }
@@ -91,6 +137,8 @@ class SearchJobs extends Component {
                         </button>
                     </div>
                 </form>
+
+                {this.configureSection()}
 
                 <div className="container">
                     <table className="table table-hover responsive bordered">

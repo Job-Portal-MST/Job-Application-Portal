@@ -68,6 +68,7 @@ class ExtApplicantProfile extends Component {
                     >
                         Add
                     </button>
+
                     {this.props.user.ed.map((edItem, edIndex) => {
                         return (
                             <div>

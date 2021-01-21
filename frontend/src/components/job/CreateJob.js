@@ -81,14 +81,20 @@ class CreateJob extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Type: </label>
-                        <input
-                            id="type"
-                            type="text"
-                            required
-                            className="form-control"
-                            onChange={this.onChange(String)}
-                        />
+                        <label> Type : </label>
+                        <div className="dropdown">
+                            <select required id="type" onChange={this.onChange(String)}>
+                                <option className="dropdown-item" value="Work From Home">
+                                    Work From Home
+                                </option>
+                                <option className="dropdown-item" value="Full Time">
+                                    Full Time
+                                </option>
+                                <option className="dropdown-item" value="Part Time">
+                                    Part Time
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Max Number of Applicants: </label>
