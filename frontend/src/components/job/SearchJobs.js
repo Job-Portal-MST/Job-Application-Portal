@@ -103,14 +103,6 @@ class SearchJobs extends Component {
                     <input id="salaryMin" type="number" min="0" step="1" onChange={onChange} />
                     <label>Salary max:</label>
                     <input id="salaryMax" type="number" min="0" step="1" onChange={onChange} />
-                    {/* <input
-                        id="duration"
-                        type="number"
-                        min="1"
-                        max="7"
-                        step="1"
-                        onChange={onChange}
-                    /> */}
                     <div className="dropdown">
                         <label>Duration less than:</label>
                         <select
