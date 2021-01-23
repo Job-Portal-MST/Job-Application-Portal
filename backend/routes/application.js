@@ -37,19 +37,18 @@ router.get("/", (req, res) => {
 router.get("/ofjob", (req, res) => {
     const jobid = req.query.jobid;
     Application.find({ jobid })
-        .then((data) => {
-            let appList = data;
+        .then((appList) => {
             let newList = [];
-            appList.map((item, idx) => {
-                User.findById(item.applicant)
+            appList.map((app, idx) => {
+                User.findById(app.applicant)
                     .then((user) => {
-                        newList.push({ ...item._doc, user });
+                        newList.push({ ...app._doc, user });
+                        if (newList.length === appList.length) {
+                            res.send(newList);
+                        }
                     })
                     .catch(errorSend(res, "error in user find"));
             });
-            setTimeout(() => {
-                res.send(newList);
-            }, 500);
         })
         .catch(errorSend(res, "error in finding in db"));
 });

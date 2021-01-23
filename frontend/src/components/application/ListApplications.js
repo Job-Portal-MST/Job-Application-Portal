@@ -18,7 +18,7 @@ class ListApplications extends Component {
         axios
             .get("/job", { params: { jobid } })
             .then((res) => {
-                this.setState({ job: res.data[0] });
+                this.setState({ job: res.data[0] ? res.data[0] : "null" });
             })
             .catch((res) => {
                 console.log(res);

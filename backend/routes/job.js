@@ -17,7 +17,9 @@ router.get("/", (req, res) => {
     query = req.query.jobid ? { _id: req.query.jobid } : {};
     Job.find(query)
         .then((data) => {
-            data = data.filter((item) => item.removed !== "yes");
+            if (req.query.email) {
+                data = data.filter((item) => item.removed !== "yes");
+            }
             res.json(data);
         })
         .catch(errorSend(res, "error in job search"));
