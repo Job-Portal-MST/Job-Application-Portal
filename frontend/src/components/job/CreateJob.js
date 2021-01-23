@@ -14,7 +14,7 @@ class CreateJob extends Component {
             postingDate: new Date(0),
             deadline: new Date(0),
             requiredSkills: [],
-            type: "",
+            type: "Work From Home",
             duration: 0,
             salary: 0,
         };

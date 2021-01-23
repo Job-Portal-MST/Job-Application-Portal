@@ -33,8 +33,8 @@ class ListJobs extends Component {
         let url = new URLSearchParams({
             jobid: this.state.jobs[index]._id,
         });
-        url = "/job/view/" + url.toString();
-        console.log("view: " + url);
+        url = "/listapplys/?" + url.toString();
+        window.location = url;
     };
 
     onEdit = (index) => (e) => {

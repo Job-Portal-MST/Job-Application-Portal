@@ -12,7 +12,6 @@ const { errorSend } = require("../misc/tools");
  * @desc get list of applications by an applicant
  * @access PUBLIC
  */
-
 router.get("/", (req, res) => {
     const userEmail = req.query.email;
     User.findOne({ email: userEmail })
@@ -28,6 +27,31 @@ router.get("/", (req, res) => {
                 .catch(errorSend(res, "error in searching applications"));
         })
         .catch(errorSend(res, "error in finding user"));
+});
+
+/**
+ * @route GET /application/ofjob
+ * @desc get list of applications by an job
+ * @access PUBLIC
+ */
+router.get("/ofjob", (req, res) => {
+    const jobid = req.query.jobid;
+    Application.find({ jobid })
+        .then((data) => {
+            let appList = data;
+            let newList = [];
+            appList.map((item, idx) => {
+                User.findById(item.applicant)
+                    .then((user) => {
+                        newList.push({ ...item._doc, user });
+                    })
+                    .catch(errorSend(res, "error in user find"));
+            });
+            setTimeout(() => {
+                res.send(newList);
+            }, 500);
+        })
+        .catch(errorSend(res, "error in finding in db"));
 });
 
 /**
@@ -72,6 +96,7 @@ router.post("/apply", (req, res) => {
                             jobid: job._id,
                             applicant: user._id,
                             bio: bio,
+                            dop: new Date(),
                         });
 
                         job.save().then().catch(console.log);
@@ -127,6 +152,9 @@ router.post("/accept", (req, res) => {
             }
             Job.findById(application.jobid)
                 .then((job) => {
+                    if (job.maxPositions <= 0) {
+                        return errorSend(res, "no more posts left", StatusCodes.BAD_REQUEST)("");
+                    }
                     User.findById(application.applicant)
                         .then((user) => {
                             application.status = "accepted";
@@ -135,15 +163,20 @@ router.post("/accept", (req, res) => {
                                 job.removed = "yes";
                             }
                             user.accepted = "yes";
-                            user.applyCnt -= 1;
+                            user.applyCnt = 0;
                             user.bossEmail = job.recruiterEmail;
-                            Application.find({ applicant: user._id })
+                            user.jobId = job._id;
+                            Application.find({ applicant: user._id, _id: { $ne: application._id } })
                                 .then((data) => {
                                     for (const iApp of data) {
                                         if (iApp._id != application._id) {
                                             iApp.status = "rejected";
+                                            console.log(toString(iApp._id));
+                                            console.log(toString(application._id));
+                                            console.log(
+                                                toString(iApp._id) === toString(application._id)
+                                            );
                                             iApp.save().then().catch(console.log);
-                                            user.applyCnt -= 1;
                                         }
                                     }
                                 })
@@ -191,8 +224,14 @@ router.post("/reject", (req, res) => {
                                 return res.send("already rejected");
                             }
                             application.status = "rejected";
-                            job.appliedCnt -= 1;
-                            user.applyCnt -= 1;
+                            if (user.accepted === "yes" && user.jobId === job._id) {
+                                user.accepted = "no";
+                                user.bossEmail = "";
+                                user.jobId = null;
+                                job.maxPositions += 1;
+                            } else {
+                                user.applyCnt -= 1;
+                            }
                             job.save().then().catch(errorSend(res, "error in saving job"));
                             user.save().then().catch(errorSend(res, "error in saving user"));
 

@@ -21,6 +21,10 @@ const appnSchema = new Schema({
         type: String,
         default: "",
     },
+    dop: {
+        type: Date,
+        require: true,
+    },
 });
 
 module.exports = Application = mongoose.model("application", appnSchema);
