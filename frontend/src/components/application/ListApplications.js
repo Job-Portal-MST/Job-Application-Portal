@@ -38,6 +38,7 @@ class ListApplications extends Component {
     }
 
     createCard = (user, app, job = this.state.job) => {
+        if (app.status === "rejected") return <Fragment></Fragment>;
         let skills = "";
         user.skills.map((skill) => {
             skills += skill + ", ";
@@ -144,7 +145,14 @@ class ListApplications extends Component {
                 <br />
                 <div className="containeer">
                     <div className="row">
-                        {this.state.appList.map((item, index) => this.createCard(item.user, item))}
+                        {this.state.appList.filter((item) => item.status !== "rejected").length ===
+                        0 ? (
+                            <p style={{ margin: "auto" }}>No Applications</p>
+                        ) : (
+                            this.state.appList.map((item, index) =>
+                                this.createCard(item.user, item)
+                            )
+                        )}
                     </div>
                 </div>
             </Fragment>

@@ -171,11 +171,6 @@ router.post("/accept", (req, res) => {
                                     for (const iApp of data) {
                                         if (iApp._id != application._id) {
                                             iApp.status = "rejected";
-                                            console.log(toString(iApp._id));
-                                            console.log(toString(application._id));
-                                            console.log(
-                                                toString(iApp._id) === toString(application._id)
-                                            );
                                             iApp.save().then().catch(console.log);
                                         }
                                     }
@@ -192,10 +187,6 @@ router.post("/accept", (req, res) => {
                                 .catch(errorSend(res, "error in saving application"));
                         })
                         .catch(errorSend(res, "err in finding user"));
-
-                    if (job.maxPositions <= 0) {
-                        return errorSend(res, "no more positions", StatusCodes.BAD_REQUEST)("");
-                    }
                 })
                 .catch(errorSend(res, "error in job search"));
         })
@@ -212,9 +203,7 @@ router.post("/reject", (req, res) => {
     Application.findById(appId)
         .then((application) => {
             if (!application) {
-                return res
-                    .status(StatusCodes.BAD_REQUEST)
-                    .json({ error: "application does not exists" })("");
+                return errorSend(res, "application does not exists", StatusCodes.BAD_REQUEST)("");
             }
             Job.findById(application.jobid)
                 .then((job) => {
