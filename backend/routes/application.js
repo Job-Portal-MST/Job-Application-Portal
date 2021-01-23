@@ -238,4 +238,36 @@ router.post("/reject", (req, res) => {
         .catch(errorSend(res, "error in finding application"));
 });
 
+/**
+ * @route GET /application/accepted
+ * @desc get list of applications accepted by an recruiter
+ * @access PUBLIC
+ */
+router.get("/accepted", (req, res) => {
+    const recEmail = req.query.email;
+    let data = [];
+    let sent = false;
+    User.find({ bossEmail: recEmail })
+        .then((users) => {
+            users.map((user) => {
+                Job.findById(user.jobId)
+                    .then((job) => {
+                        data.push({ user, job });
+                        if (data.length === users.length) {
+                            res.send(data);
+                            sent = true;
+                        }
+                    })
+                    .catch(errorSend(res, "error in searching jobs db"));
+            });
+            setTimeout(() => {
+                if (!sent) {
+                    console.log("cant fill data");
+                    res.send(data);
+                }
+            }, 2000);
+        })
+        .catch(errorSend(res, "error in finding users"));
+});
+
 module.exports = router;
