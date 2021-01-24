@@ -89,9 +89,23 @@ class AcceptedApps extends Component {
         );
     };
 
-    rateUser = (user) => (e, newValue) => {};
+    rateUser = (userEmail) => (e, newValue) => {
+        axios
+            .post("/user/rate", { recEmail: ls.get("email"), userEmail, rating: newValue })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch((res) => {
+                console.log(res);
+                alert("error");
+                window.location.reload();
+            });
+    };
 
     createCard = (user, job) => {
+        const getCurrRating = () => {
+            return user.ratersList ? user.ratersList[ls.get("email")] : 0;
+        };
         return (
             <div
                 className="row"
@@ -115,10 +129,7 @@ class AcceptedApps extends Component {
                     <b>Job title: </b> {job.title} <br />
                     <br />
                     <b>Rate applicant: </b>
-                    <Rating
-                        value={user.rating}
-                        // onChange={this.rateUser(app)}
-                    />
+                    <Rating value={getCurrRating(user)} onChange={this.rateUser(user.email)} />
                     <br />
                 </div>
             </div>

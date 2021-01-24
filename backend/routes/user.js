@@ -141,13 +141,10 @@ router.post("/rate", (req, res) => {
             return errorSend(res, "no such id", StatusCodes.BAD_REQUEST);
         }
         let noOfRaters = Object.keys(user.ratersList).length;
-        console.log(user.ratersList);
-        console.log(noOfRaters);
         if (!user.ratersList[recEmail]) {
             user.rating = (user.rating * noOfRaters + ratingGiven) / (noOfRaters + 1);
         } else {
             let x = user.rating * noOfRaters - user.ratersList[recEmail];
-            console.log(x);
             user.rating = (x + ratingGiven) / noOfRaters;
         }
         user.ratersList = { ...user.ratersList, [recEmail]: ratingGiven };
