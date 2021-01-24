@@ -37,6 +37,40 @@ class ListApplications extends Component {
             });
     }
 
+    configureSection = () => {
+        const sortBtn = (msg, cmp) => (
+            <button
+                style={{ margin: "2px" }}
+                className="btn btn-sm btn-info"
+                onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ appList: this.state.appList.sort(cmp) });
+                }}
+            >
+                {msg}
+            </button>
+        );
+
+        return (
+            <div className="row">
+                {sortBtn("Sort by Name", (a, b) =>
+                    a.user.name.toUpperCase() < b.user.name.toUpperCase() ? -1 : 1
+                )}
+                {sortBtn("Sort by Name(rev)", (a, b) =>
+                    a.user.name.toUpperCase() > b.user.name.toUpperCase() ? -1 : 1
+                )}
+                {sortBtn("Sort by Date of Application", (a, b) =>
+                    new Date(a.dop) < new Date(b.dop) ? -1 : 1
+                )}
+                {sortBtn("Sort by Date of Application(rev)", (a, b) =>
+                    new Date(a.dop) > new Date(b.dop) ? -1 : 1
+                )}
+                {sortBtn("Sort by rating", (a, b) => (a.user.rating < b.user.rating ? -1 : 1))}
+                {sortBtn("Sort by rating(rev)", (a, b) => (a.user.rating > b.user.rating ? -1 : 1))}
+            </div>
+        );
+    };
+
     createCard = (user, app, job = this.state.job) => {
         if (app.status === "rejected") return <Fragment></Fragment>;
         let skills = "";
@@ -101,10 +135,11 @@ class ListApplications extends Component {
         }
         return (
             <div
-                className="col-4"
+                className="col-6"
                 style={{
                     backgroundColor: "#eee",
                     margin: "auto",
+                    marginTop: "15px",
                     borderRadius: "10px",
                     padding: "10px",
                 }}
@@ -143,17 +178,14 @@ class ListApplications extends Component {
             <Fragment>
                 <h1>Job({this.state.job.title}) Applications</h1>
                 <br />
-                <div className="containeer">
-                    <div className="row">
-                        {this.state.appList.filter((item) => item.status !== "rejected").length ===
-                        0 ? (
-                            <p style={{ margin: "auto" }}>No Applications</p>
-                        ) : (
-                            this.state.appList.map((item, index) =>
-                                this.createCard(item.user, item)
-                            )
-                        )}
-                    </div>
+                {this.configureSection()}
+                <div className="container">
+                    {this.state.appList.filter((item) => item.status !== "rejected").length ===
+                    0 ? (
+                        <p style={{ margin: "auto" }}>No Applications</p>
+                    ) : (
+                        this.state.appList.map((item, index) => this.createCard(item.user, item))
+                    )}
                 </div>
             </Fragment>
         );
