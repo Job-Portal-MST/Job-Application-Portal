@@ -1,13 +1,8 @@
 import React, { Component, Fragment } from "react";
-import axios from "axios";
-import ls from "local-storage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "../styles";
 
 class ExtApplicantProfile extends Component {
-    constructor(props) {
-        super(props);
-    }
     onChange = (e) => {
         this.props.parOnChange(e.target.id, e.target.value);
     };

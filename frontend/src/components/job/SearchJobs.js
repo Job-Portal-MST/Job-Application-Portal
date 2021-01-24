@@ -1,8 +1,7 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SearchIcon from "@material-ui/icons/Search";
 
 class SearchJobs extends Component {
     constructor() {
@@ -86,7 +85,7 @@ class SearchJobs extends Component {
             this.applyFilters(filters);
         };
         return (
-            <div style={{ margin: "10px", width: "90%", margin: "auto" }}>
+            <div style={{ width: "90%", margin: "auto" }}>
                 <div className="row">
                     {sortBtn("Sort by Salary", this.sortJobsfunc("salary"))}
                     {sortBtn("Sort by Salary(rev)", this.sortJobsfunc("salary", true))}

@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";

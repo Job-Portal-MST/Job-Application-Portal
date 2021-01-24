@@ -17,7 +17,7 @@ class MyApplications extends Component {
             .get("/application", { params: { email: ls.get("email") } })
             .then((res) => {
                 let appList = res.data;
-                appList.map((app, idx) => {
+                appList.map((app, idx) =>
                     axios
                         .get("/job", {
                             params: { jobid: app.jobid },
@@ -27,8 +27,8 @@ class MyApplications extends Component {
                         })
                         .catch((res) => {
                             alert(res.response.data.error);
-                        });
-                });
+                        })
+                );
                 setTimeout(() => {
                     this.setState({ appList });
                 }, 500);

@@ -1,9 +1,6 @@
 import { Component, Fragment } from "react";
-import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const cellStyle = { textAlign: "center", verticalAlign: "middle" };
 
 class ListApplications extends Component {
     constructor() {
@@ -76,9 +73,7 @@ class ListApplications extends Component {
     createCard = (user, app, job = this.state.job) => {
         if (app.status === "rejected") return <Fragment></Fragment>;
         let skills = "";
-        user.skills.map((skill) => {
-            skills += skill + ", ";
-        });
+        user.skills.map((skill) => (skills += skill + ", "));
         skills = skills.slice(0, -2);
         let bt1 = <Fragment></Fragment>;
         if (app.status === "applied") {
@@ -119,7 +114,7 @@ class ListApplications extends Component {
             );
         }
         let bt2 = <Fragment></Fragment>;
-        if (app.status != "rejected" && app.status != "accepted") {
+        if (app.status !== "rejected" && app.status !== "accepted") {
             bt2 = (
                 <button
                     className="btn btn-danger btn-sm col"
