@@ -21,7 +21,7 @@ class ListJobs extends Component {
                 },
             })
             .then((res) => {
-                this.setState({ jobs: res.data });
+                this.setState({ jobs: res.data.filter((job) => job.maxPositions > 0) });
             })
             .catch((res) => {
                 alert(res.response.data.error);

@@ -65,7 +65,6 @@ class MyApplications extends Component {
                             <th scope="col">Date of posting</th>
                             <th scope="col">Salary</th>
                             <th scope="col">Duration</th>
-                            <th scope="col">Deadline</th>
                             <th scope="col"> Status</th>
                             <th scope="col"> </th>
                         </tr>
@@ -76,10 +75,13 @@ class MyApplications extends Component {
                                 <tr key={index}>
                                     <td>{app.job.title}</td>
                                     <td>{app.job.recruiterName}</td>
-                                    <td>{new Date(app.job.postingDate).toDateString()}</td>
+                                    <td>
+                                        {app.status === "rejected"
+                                            ? "--"
+                                            : new Date(app.job.postingDate).toDateString()}
+                                    </td>
                                     <td>{app.job.salary}</td>
                                     <td>{app.job.duration}</td>
-                                    <td>{new Date(app.job.deadline).toLocaleString()}</td>
                                     <td>{app.status}</td>
                                     <td>
                                         {app.status === "accepted" ? (
