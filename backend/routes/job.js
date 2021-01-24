@@ -118,6 +118,7 @@ router.post("/remove", (req, res) => {
                     Job.findByIdAndUpdate(iApp.applicant, { accepted: "no" });
                 }
                 iApp.status = "rejected";
+                iApp.jobDeleted = "yes";
                 iApp.save().then().catch(console.log);
             }
         });

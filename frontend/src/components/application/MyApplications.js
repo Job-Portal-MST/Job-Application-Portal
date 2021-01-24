@@ -82,7 +82,7 @@ class MyApplications extends Component {
                                     </td>
                                     <td>{app.job.salary}</td>
                                     <td>{app.job.duration}</td>
-                                    <td>{app.status}</td>
+                                    <td>{app.jobDeleted === "yes" ? "job-deleted" : app.status}</td>
                                     <td>
                                         {app.status === "accepted" ? (
                                             <Rating

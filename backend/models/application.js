@@ -29,6 +29,10 @@ const appnSchema = new Schema({
         type: Number,
         default: 0,
     },
+    jobDeleted: {
+        type: String,
+        default: "no",
+    },
 });
 
 module.exports = Application = mongoose.model("application", appnSchema);
