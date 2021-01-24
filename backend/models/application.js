@@ -25,6 +25,10 @@ const appnSchema = new Schema({
         type: Date,
         require: true,
     },
+    rating: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = Application = mongoose.model("application", appnSchema);

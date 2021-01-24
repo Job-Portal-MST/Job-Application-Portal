@@ -54,6 +54,16 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: null,
     },
+    rating: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    ratingCnt: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
     /////////////////
 });
 

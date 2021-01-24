@@ -2,6 +2,7 @@ import { Component, Fragment } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Rating } from "@material-ui/lab";
 
 class MyApplications extends Component {
     constructor() {
@@ -37,6 +38,22 @@ class MyApplications extends Component {
                 alert("error");
             });
     }
+
+    rateJob = (app) => (e, newValue) => {
+        e.preventDefault();
+        console.log(newValue);
+        axios
+            .post("/application/rate", { appId: app._id, rating: newValue })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("error");
+                window.location.reload();
+            });
+    };
+
     render() {
         return (
             <Fragment>
@@ -66,7 +83,11 @@ class MyApplications extends Component {
                                     <td>{app.status}</td>
                                     <td>
                                         {app.status === "accepted" ? (
-                                            <button className="btn btn-sm btn-primary">Rate</button>
+                                            <Rating
+                                                name="simple-controlled"
+                                                value={app.rating}
+                                                onChange={this.rateJob(app)}
+                                            />
                                         ) : (
                                             "-"
                                         )}

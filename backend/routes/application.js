@@ -19,7 +19,6 @@ router.get("/", (req, res) => {
             if (!user) {
                 return errorSend(res, "invalid id", StatusCodes.BAD_REQUEST);
             }
-            console.log(user._id);
             Application.find({ applicant: user._id })
                 .then((data) => {
                     res.send(data);
@@ -267,6 +266,45 @@ router.get("/accepted", (req, res) => {
             }, 2000);
         })
         .catch(errorSend(res, "error in finding users"));
+});
+
+/**
+ * @route POST /application/rate
+ * @desc rate job by ac user
+ * @access PUBLIC
+ */
+router.post("/rate", (req, res) => {
+    const ratingGiven = Number(req.body.rating);
+    const appId = req.body.appId;
+    console.log({ ratingGiven, appId });
+    Application.findById(appId)
+        .then((app) => {
+            if (!app) {
+                return errorSend(res, "no such application", StatusCodes.BAD_REQUEST)("");
+            }
+            if (app.status !== "accepted") {
+                return errorSend(res, "only accepted users can rate", StatusCodes.BAD_REQUEST);
+            }
+            Job.findById(app.jobid).then((job) => {
+                if (!job) {
+                    return errorSend(res, "no job found", StatusCodes.BAD_REQUEST)("");
+                }
+                if (!app.rating) {
+                    job.rating = (job.rating * job.ratingCnt + ratingGiven) / (job.ratingCnt + 1);
+                    app.rating = ratingGiven;
+                    job.ratingCnt += 1;
+                } else {
+                    let x = job.rating * job.ratingCnt - app.rating;
+                    job.rating = (x + ratingGiven) / job.ratingCnt;
+                    app.rating = ratingGiven;
+                }
+                app.save().then().catch(console.log);
+                job.save()
+                    .then((job) => res.send("ok"))
+                    .catch(errorSend(res, "error while saving"));
+            });
+        })
+        .catch(errorSend(res, "error in app find"));
 });
 
 module.exports = router;
