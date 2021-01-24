@@ -5,7 +5,7 @@ const StatusCodes = require("http-status-codes").StatusCodes;
 const Job = require("../models/job");
 const User = require("../models/user");
 const Application = require("../models/application");
-const { errorSend } = require("../misc/tools");
+const { errorSend, rejectRemaining } = require("../misc/tools");
 
 /**
  * @route GET /job
@@ -87,6 +87,9 @@ router.post("/edit", (req, res) => {
             }
             for (const key in givenJob) {
                 job[key] = givenJob[key];
+            }
+            if (job.maxPositions == 0) {
+                rejectRemaining(job);
             }
             job.save()
                 .then((data) => {

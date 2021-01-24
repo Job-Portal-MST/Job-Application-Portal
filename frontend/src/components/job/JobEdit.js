@@ -45,7 +45,7 @@ class JobEdit extends Component {
             .post("/job/edit", { job: this.state })
             .then((res) => {
                 alert("changes done successfully!");
-                window.location.reload();
+                window.location = "/";
             })
             .catch((res) => {
                 alert(res.response.data.error);

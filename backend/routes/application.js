@@ -5,7 +5,7 @@ const StatusCodes = require("http-status-codes").StatusCodes;
 const Job = require("../models/job");
 const User = require("../models/user");
 const Application = require("../models/application");
-const { errorSend } = require("../misc/tools");
+const { errorSend, rejectRemaining } = require("../misc/tools");
 
 /**
  * @route GET /application/
@@ -159,6 +159,7 @@ router.post("/accept", (req, res) => {
                             job.maxPositions -= 1;
                             if (job.maxPositions === 0) {
                                 job.removed = "yes";
+                                rejectRemaining(job);
                             }
                             user.accepted = "yes";
                             user.applyCnt = 0;

@@ -103,7 +103,7 @@ class ListJobs extends Component {
                                         {item.appliedCnt}
                                     </td>
                                     <td onClick={this.onView(index)} style={cellStyle}>
-                                        {item.maxApplicant}
+                                        {item.maxPositions}
                                     </td>
                                     <td style={cellStyle} onClick={(e) => e.preventDefault()}>
                                         <button
