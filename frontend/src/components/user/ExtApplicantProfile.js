@@ -28,6 +28,7 @@ class ExtApplicantProfile extends Component {
                         return (
                             <div>
                                 <input
+                                    list="languages"
                                     required
                                     value={skItem}
                                     onChange={(e) => {
@@ -129,6 +130,14 @@ class ExtApplicantProfile extends Component {
                         );
                     })}
                 </div>
+                <datalist id="languages">
+                    <option value="C" />
+                    <option value="C++" />
+                    <option value="Python" />
+                    <option value="Java" />
+                    <option value="Haskell" />
+                    <option value="Go" />
+                </datalist>
             </Fragment>
         );
     }
