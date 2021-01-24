@@ -2,6 +2,7 @@ import { Component, Fragment } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import style from "../styles";
 
 class CreateJob extends Component {
     constructor() {
@@ -82,7 +83,7 @@ class CreateJob extends Component {
                     </div>
                     <div className="form-group">
                         <label> Type : </label>
-                        <div className="dropdown">
+                        <div style={{ display: "inline", marginLeft: "5px" }} className="dropdown">
                             <select required id="type" onChange={this.onChange(String)}>
                                 <option className="dropdown-item" value="Work From Home">
                                     Work From Home
@@ -176,6 +177,7 @@ class CreateJob extends Component {
                     <div className="form-group">
                         <label>Required Skills:</label>
                         <button
+                            className={style.addBtnClass}
                             style={{ margin: "4px" }}
                             onClick={(e) => {
                                 e.preventDefault();
@@ -191,6 +193,7 @@ class CreateJob extends Component {
                                 <div>
                                     <input
                                         required
+                                        list="languages"
                                         value={item}
                                         onChange={(e) => {
                                             e.preventDefault();
@@ -205,20 +208,14 @@ class CreateJob extends Component {
                                             });
                                         }}
                                     />
-
-                                    <button
-                                        style={{ display: "inline", marginLeft: "5px" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            this.setState({
-                                                requiredSkills: this.state.requiredSkills.filter(
-                                                    (xitem, xindex) => xindex !== index
-                                                ),
-                                            });
-                                        }}
-                                    >
-                                        X
-                                    </button>
+                                    {style.crossBtnGenerator((e) => {
+                                        e.preventDefault();
+                                        this.setState({
+                                            requiredSkills: this.state.requiredSkills.filter(
+                                                (xitem, xindex) => xindex !== index
+                                            ),
+                                        });
+                                    })}
                                 </div>
                             );
                         })}
@@ -242,6 +239,14 @@ class CreateJob extends Component {
                         </div>
                     </div>
                 </form>
+                <datalist id="languages">
+                    <option value="C" />
+                    <option value="C++" />
+                    <option value="Python" />
+                    <option value="Java" />
+                    <option value="Haskell" />
+                    <option value="Go" />
+                </datalist>
             </div>
         );
     }

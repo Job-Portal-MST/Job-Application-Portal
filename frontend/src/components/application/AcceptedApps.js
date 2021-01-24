@@ -30,10 +30,10 @@ class AcceptedApps extends Component {
             this.setState({ list: this.state.list.sort(cmp) });
         };
         return (
-            <div>
+            <div className="row" style={{ width: "90%", margin: "auto" }}>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         a.user.name.toUpperCase() < b.user.name.toUpperCase() ? -1 : 1
                     )}
@@ -42,7 +42,7 @@ class AcceptedApps extends Component {
                 </button>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         a.user.name.toUpperCase() > b.user.name.toUpperCase() ? -1 : 1
                     )}
@@ -51,7 +51,7 @@ class AcceptedApps extends Component {
                 </button>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         a.job.title.toUpperCase() < b.job.title.toUpperCase() ? -1 : 1
                     )}
@@ -60,7 +60,7 @@ class AcceptedApps extends Component {
                 </button>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         a.job.title.toUpperCase() > b.job.title.toUpperCase() ? -1 : 1
                     )}
@@ -69,7 +69,7 @@ class AcceptedApps extends Component {
                 </button>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         new Date(a.job.postingDate) < new Date(b.job.postingDate) ? -1 : 1
                     )}
@@ -78,7 +78,7 @@ class AcceptedApps extends Component {
                 </button>
                 <button
                     style={{ margin: "2px" }}
-                    className="btn btn-sm btn-info"
+                    className="col-auto-md btn btn-sm btn-info"
                     onClick={sortBy((a, b) =>
                         new Date(a.job.postingDate) > new Date(b.job.postingDate) ? -1 : 1
                     )}
@@ -128,8 +128,10 @@ class AcceptedApps extends Component {
                     <b>Job type: </b> {job.type} <br />
                     <b>Job title: </b> {job.title} <br />
                     <br />
-                    <b>Rate applicant: </b>
-                    <Rating value={getCurrRating(user)} onChange={this.rateUser(user.email)} />
+                    <div className="row">
+                        <b className="">Rate applicant: </b>
+                        <Rating value={getCurrRating(user)} onChange={this.rateUser(user.email)} />
+                    </div>
                     <br />
                 </div>
             </div>

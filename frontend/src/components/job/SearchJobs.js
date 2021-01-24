@@ -2,6 +2,7 @@ import { Component, Fragment } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SearchIcon from "@material-ui/icons/Search";
 
 class SearchJobs extends Component {
     constructor() {
@@ -47,11 +48,23 @@ class SearchJobs extends Component {
 
     createApplyButton = (job, index) => {
         if (job.applied === "yes") {
-            return <button>Applied</button>;
+            return (
+                <button className="btn btn-sm btn-primary" disabled>
+                    Applied
+                </button>
+            );
         } else if (job.appliedCnt >= job.maxApplicant) {
-            return <button>Full</button>;
+            return (
+                <button className="btn btn-sm btn-warning" disabled>
+                    Full
+                </button>
+            );
         } else {
-            return <button onClick={this.applyJob(index)}>Apply</button>;
+            return (
+                <button className="btn btn-sm btn-primary" onClick={this.applyJob(index)}>
+                    Apply
+                </button>
+            );
         }
     };
 
@@ -63,7 +76,7 @@ class SearchJobs extends Component {
 
     configureSection = () => {
         const sortBtn = (msg, func) => (
-            <button style={{ margin: "2px" }} className="btn btn-sm btn-info" onClick={func}>
+            <button style={{ margin: "2px" }} className="btn btn-sm btn-info col" onClick={func}>
                 {msg}
             </button>
         );
@@ -73,18 +86,19 @@ class SearchJobs extends Component {
             this.applyFilters(filters);
         };
         return (
-            <div style={{ margin: "10px" }}>
-                <div>
+            <div style={{ margin: "10px", width: "90%", margin: "auto" }}>
+                <div className="row">
                     {sortBtn("Sort by Salary", this.sortJobsfunc("salary"))}
                     {sortBtn("Sort by Salary(rev)", this.sortJobsfunc("salary", true))}
                     {sortBtn("Sort by Rating", this.sortJobsfunc("rating"))}
                     {sortBtn("Sort by Rating(rev)", this.sortJobsfunc("rating", true))}
                     {sortBtn("Sort by Duration", this.sortJobsfunc("duration"))}
                     {sortBtn("Sort by Duration(rev)", this.sortJobsfunc("duration", true))}
-                    <br />
-                    <div className="dropdown">
-                        Type:
-                        <select id="type" onChange={onChange}>
+                </div>
+                <div className="row">
+                    <div className="dropdown col">
+                        <label>Type:</label>
+                        <select style={{ marginLeft: "5px" }} id="type" onChange={onChange}>
                             <option className="dropdown-item" value="Any">
                                 Any
                             </option>
@@ -99,12 +113,17 @@ class SearchJobs extends Component {
                             </option>
                         </select>
                     </div>
-                    <label>Salary min:</label>
-                    <input id="salaryMin" type="number" min="0" step="1" onChange={onChange} />
-                    <label>Salary max:</label>
-                    <input id="salaryMax" type="number" min="0" step="1" onChange={onChange} />
-                    <div className="dropdown">
+                    <div className="col">
+                        <label>Salary min:</label>
+                        <input id="salaryMin" type="number" min="0" step="1" onChange={onChange} />
+                    </div>
+                    <div className="col">
+                        <label>Salary max:</label>
+                        <input id="salaryMax" type="number" min="0" step="1" onChange={onChange} />
+                    </div>
+                    <div className="dropdown col">
                         <label>Duration less than:</label>
+                        <br />
                         <select
                             itemType="number"
                             defaultValue="7"
@@ -192,8 +211,9 @@ class SearchJobs extends Component {
                     }}
                 >
                     <div className="form-group">
-                        <label>search by title: </label>
+                        <label>Search by title: </label>
                         <input
+                            style={{ width: "80%", marginLeft: "4px", display: "inline" }}
                             id="key"
                             type="text"
                             className="form-control"
@@ -203,6 +223,8 @@ class SearchJobs extends Component {
                             }}
                         />
                         <button
+                            className="btn btn-sm btn-outline alert-secondary"
+                            style={{ marginLeft: "4px" }}
                             onClick={(e) => {
                                 e.preventDefault();
                                 this.updateJobs();
@@ -215,7 +237,7 @@ class SearchJobs extends Component {
 
                 {this.configureSection()}
 
-                <div className="container">
+                <div className="container" style={{ marginTop: "20px" }}>
                     <table className="table table-hover responsive bordered">
                         <thead className="thead-dark">
                             <tr key="head">
@@ -232,14 +254,12 @@ class SearchJobs extends Component {
                             {this.state.showJobs.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td onClick={this.applyJob(index)}>{item.title}</td>
-                                        <td onClick={this.applyJob(index)}>{item.recruiterName}</td>
-                                        <td onClick={this.applyJob(index)}>{item.rating}</td>
-                                        <td onClick={this.applyJob(index)}>{item.salary}</td>
-                                        <td onClick={this.applyJob(index)}>{item.duration}</td>
-                                        <td onClick={this.applyJob(index)}>
-                                            {new Date(item.deadline).toLocaleString()}
-                                        </td>
+                                        <td>{item.title}</td>
+                                        <td>{item.recruiterName}</td>
+                                        <td>{item.rating}</td>
+                                        <td>{item.salary}</td>
+                                        <td>{item.duration}</td>
+                                        <td>{new Date(item.deadline).toLocaleString()}</td>
                                         <td onClick={(e) => console.log(index)}>
                                             {this.createApplyButton(item, index)}
                                         </td>

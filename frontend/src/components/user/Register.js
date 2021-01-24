@@ -77,7 +77,7 @@ class Register extends Component {
 
                     <div className="form-group">
                         <label>User Type : </label>
-                        <div className="dropdown">
+                        <div style={{ display: "inline", margin: "4px" }}>
                             <select id="isRecruiter" onChange={this.onChange}>
                                 <option className="dropdown-item" value="no">
                                     Applicant

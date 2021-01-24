@@ -2,6 +2,8 @@ import { Component, Fragment } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import EditIcon from "@material-ui/icons/Edit";
+import { Delete } from "@material-ui/icons";
 
 const cellStyle = { textAlign: "center", verticalAlign: "middle" };
 
@@ -66,6 +68,7 @@ class ListJobs extends Component {
         return (
             <Fragment>
                 <h1>Job listings</h1>
+                <br />
                 <table className="table table-hover responsive bordered">
                     <thead className="thead-dark">
                         <tr key="head">
@@ -107,20 +110,20 @@ class ListJobs extends Component {
                                     </td>
                                     <td style={cellStyle} onClick={(e) => e.preventDefault()}>
                                         <button
-                                            className="btn btn-warning"
+                                            className="btn btn-sm btn-outline-warning"
                                             style={{ margin: "10px" }}
                                             onClick={this.onEdit(index)}
                                         >
-                                            e
+                                            <EditIcon />
                                         </button>
                                     </td>
                                     <td style={cellStyle}>
                                         <button
-                                            className="btn btn-danger"
+                                            className="btn btn-sm btn-outline-danger"
                                             style={{ margin: "10px" }}
                                             onClick={this.onCancel(index)}
                                         >
-                                            x
+                                            <Delete />
                                         </button>
                                     </td>
                                 </tr>

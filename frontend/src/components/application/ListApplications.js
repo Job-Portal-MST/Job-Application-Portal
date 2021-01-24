@@ -39,20 +39,22 @@ class ListApplications extends Component {
 
     configureSection = () => {
         const sortBtn = (msg, cmp) => (
-            <button
-                style={{ margin: "2px" }}
-                className="btn btn-sm btn-info"
-                onClick={(e) => {
-                    e.preventDefault();
-                    this.setState({ appList: this.state.appList.sort(cmp) });
-                }}
-            >
-                {msg}
-            </button>
+            <div className="col-md-auto" style={{ margin: "2px", padding: "0" }}>
+                <button
+                    style={{ margin: "2px" }}
+                    className="btn btn-sm btn-info"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.setState({ appList: this.state.appList.sort(cmp) });
+                    }}
+                >
+                    {msg}
+                </button>
+            </div>
         );
 
         return (
-            <div className="row">
+            <div className="row" style={{ width: "90%", margin: "auto" }}>
                 {sortBtn("Sort by Name", (a, b) =>
                     a.user.name.toUpperCase() < b.user.name.toUpperCase() ? -1 : 1
                 )}
@@ -82,6 +84,7 @@ class ListApplications extends Component {
         if (app.status === "applied") {
             bt1 = (
                 <button
+                    className="btn btn-info btn-sm col"
                     onClick={(e) => {
                         e.preventDefault();
                         axios
@@ -99,6 +102,7 @@ class ListApplications extends Component {
         } else if (app.status === "shortlisted") {
             bt1 = (
                 <button
+                    className="btn btn-success btn-sm col"
                     onClick={(e) => {
                         e.preventDefault();
                         axios
@@ -118,6 +122,7 @@ class ListApplications extends Component {
         if (app.status != "rejected" && app.status != "accepted") {
             bt2 = (
                 <button
+                    className="btn btn-danger btn-sm col"
                     onClick={(e) => {
                         e.preventDefault();
                         axios
@@ -167,8 +172,10 @@ class ListApplications extends Component {
                     <b>SOP: </b> {app.bio} <br />
                     <b>Rating: </b> {user.rating} <br />
                     <b>Application Status: </b> {app.status} <br />
-                    {bt1}
-                    {bt2}
+                    <div className="row" style={{ margin: "5px" }}>
+                        {bt1}
+                        {bt2}
+                    </div>
                 </p>
             </div>
         );

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import axios from "axios";
 import ls from "local-storage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import style from "../styles";
 
 class ExtApplicantProfile extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class ExtApplicantProfile extends Component {
                 <div className="form-group">
                     <label>Skills: </label>
                     <button
+                        className={style.addBtnClass}
                         style={{ margin: "4px" }}
                         onClick={(e) => {
                             e.preventDefault();
@@ -40,16 +42,10 @@ class ExtApplicantProfile extends Component {
                                         );
                                     }}
                                 />
-
-                                <button
-                                    style={{ display: "inline", marginLeft: "5px" }}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        this.props.handleArrayDelete("skills", skIndex);
-                                    }}
-                                >
-                                    X
-                                </button>
+                                {style.crossBtnGenerator((e) => {
+                                    e.preventDefault();
+                                    this.props.handleArrayDelete("skills", skIndex);
+                                })}
                             </div>
                         );
                     })}
@@ -57,6 +53,7 @@ class ExtApplicantProfile extends Component {
                 <div className="form-group">
                     <label>Educational Details: </label>
                     <button
+                        className={style.addBtnClass}
                         style={{ margin: "4px" }}
                         onClick={(e) => {
                             e.preventDefault();
@@ -117,15 +114,10 @@ class ExtApplicantProfile extends Component {
                                         });
                                     }}
                                 />
-                                <button
-                                    style={{ display: "inline", marginLeft: "5px" }}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        this.props.handleArrayDelete("ed", edIndex);
-                                    }}
-                                >
-                                    X
-                                </button>
+                                {style.crossBtnGenerator((e) => {
+                                    e.preventDefault();
+                                    this.props.handleArrayDelete("ed", edIndex);
+                                })}
                             </div>
                         );
                     })}

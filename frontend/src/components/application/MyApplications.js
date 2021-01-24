@@ -57,6 +57,8 @@ class MyApplications extends Component {
     render() {
         return (
             <Fragment>
+                <h1>My Applications</h1>
+                <br />
                 <table className="table table-hover responsive bordered">
                     <thead className="thead-dark">
                         <tr key="head">
