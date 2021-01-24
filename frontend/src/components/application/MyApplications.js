@@ -84,7 +84,6 @@ class MyApplications extends Component {
                                     <td>
                                         {app.status === "accepted" ? (
                                             <Rating
-                                                name="simple-controlled"
                                                 value={app.rating}
                                                 onChange={this.rateJob(app)}
                                             />

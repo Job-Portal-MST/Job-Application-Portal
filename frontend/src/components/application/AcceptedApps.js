@@ -2,6 +2,7 @@ import { Component, Fragment } from "react";
 import ls from "local-storage";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Rating } from "@material-ui/lab";
 
 class AcceptedApps extends Component {
     constructor() {
@@ -88,6 +89,8 @@ class AcceptedApps extends Component {
         );
     };
 
+    rateUser = (user) => (e, newValue) => {};
+
     createCard = (user, job) => {
         return (
             <div
@@ -111,7 +114,12 @@ class AcceptedApps extends Component {
                     <b>Job type: </b> {job.type} <br />
                     <b>Job title: </b> {job.title} <br />
                     <br />
-                    <b>Rate applicant: </b> <br />
+                    <b>Rate applicant: </b>
+                    <Rating
+                        value={user.rating}
+                        // onChange={this.rateUser(app)}
+                    />
+                    <br />
                 </div>
             </div>
         );

@@ -7,6 +7,7 @@ const Job = require("../models/job");
 const User = require("../models/user");
 const Application = require("../models/application");
 const { errorSend } = require("../misc/tools");
+const { StatusCodes } = require("http-status-codes");
 
 /**
  * @route   POST     /user/login
@@ -122,6 +123,37 @@ router.post("/profile", (req, res) => {
             .then((user) => {
                 res.json({ user });
             })
+            .catch(errorSend(res, "error in saving data"));
+    });
+});
+
+/**
+ * @route   POST     /user/rate
+ * @desc    rate user
+ * @access  PUBLIC
+ */
+router.post("/rate", (req, res) => {
+    const { recEmail, userEmail, rating } = req.body;
+    const ratingGiven = Number(rating);
+    User.updateOne();
+    User.findOne({ email: userEmail, bossEmail: recEmail }).then((user) => {
+        if (!user) {
+            return errorSend(res, "no such id", StatusCodes.BAD_REQUEST);
+        }
+        let noOfRaters = Object.keys(user.ratersList).length;
+        console.log(user.ratersList);
+        console.log(noOfRaters);
+        if (!user.ratersList[recEmail]) {
+            user.rating = (user.rating * noOfRaters + ratingGiven) / (noOfRaters + 1);
+        } else {
+            let x = user.rating * noOfRaters - user.ratersList[recEmail];
+            console.log(x);
+            user.rating = (x + ratingGiven) / noOfRaters;
+        }
+        user.ratersList = { ...user.ratersList, [recEmail]: ratingGiven };
+
+        user.save()
+            .then((user) => res.send(user))
             .catch(errorSend(res, "error in saving data"));
     });
 });

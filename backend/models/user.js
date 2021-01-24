@@ -59,10 +59,10 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: 0,
     },
-    ratingCnt: {
-        type: Number,
+    ratersList: {
+        type: Object,
         required: false,
-        default: 0,
+        default: {},
     },
     /////////////////
 });
