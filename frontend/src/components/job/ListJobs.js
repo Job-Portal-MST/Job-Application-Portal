@@ -79,7 +79,7 @@ class ListJobs extends Component {
                                 No.of Applications
                             </th>
                             <th style={cellStyle} scope="col">
-                                Max no.of Applications
+                                Positions
                             </th>
                             <th style={cellStyle} scope="col">
                                 Edit

@@ -149,7 +149,7 @@ class SearchJobs extends Component {
                 params: { key: this.state.key },
             })
             .then((res) => {
-                let jobList = res.data;
+                let jobList = res.data.filter((job) => new Date() < new Date(job.deadline));
                 axios
                     .get("/application", { params: { email: ls.get("email") } })
                     .then((res) => {

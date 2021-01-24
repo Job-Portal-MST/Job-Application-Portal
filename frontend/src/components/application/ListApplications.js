@@ -165,6 +165,7 @@ class ListApplications extends Component {
                         })}
                     </ul>
                     <b>SOP: </b> {app.bio} <br />
+                    <b>Rating: </b> {user.rating} <br />
                     <b>Application Status: </b> {app.status} <br />
                     {bt1}
                     {bt2}
