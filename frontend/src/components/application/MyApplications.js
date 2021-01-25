@@ -31,7 +31,7 @@ class MyApplications extends Component {
                 );
                 setTimeout(() => {
                     this.setState({ appList });
-                }, 500);
+                }, 2000);
             })
             .catch((res) => {
                 console.log(res);
