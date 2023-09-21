@@ -22,12 +22,7 @@ app.use("/job", jobRouter);
 app.use("/application", appRouter);
 
 // db connection
-mongoose.connect("mongodb://127.0.0.1:27017/" + DB_NAME, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-});
+mongoose.connect("mongodb+srv://rsainarendra:7095.S%40i@cluster0.lrsuxfx.mongodb.net/jobsdb", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.Promise = global.Promise;
 const connection = mongoose.connection;
 connection.once("open", function () {

@@ -17,7 +17,8 @@
     "is-empty": "^1.2.0",
     "moment": "^2.29.1",
     "mongoose": "^5.11.11",
-    "mongoose-fuzzy-searching": "^2.0.2"
+    "mongoose-fuzzy-searching": "^2.0.2",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
